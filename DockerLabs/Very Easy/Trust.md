@@ -119,4 +119,5 @@ Comprobamos lo realizado:
 ![Alt Imagen12](https://blogger.googleusercontent.com/img/a/AVvXsEialK8YD1_h6VPsmooWUGr7QdMQrEnYVv4spc598dnHKAjo7O0CPIXQJpkJvyrEh4jqQ-NxvyReuHYa5uM_QoFssZkx_0vSBgf4WFsFizCPxbYcawIgpGYN884vpQox1oZ_JbfzvhpNuUsjUifcAElInxNSF6Vt92du9mYQAz5UlxWQcYG2x__uP3hQmU8e=w524-h93)
 
 Como vemos, el usuario mario ya puede ser superusuario sin neccesidad de contraseña.
+
 Gracias por leer este WriteUp. :)
