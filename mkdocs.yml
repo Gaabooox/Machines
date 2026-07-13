@@ -10,6 +10,10 @@ theme:
   name: material
   language: es
 
+  icon:
+    logo: fontawesome/solid/skull
+    repo: fontawesome/brands/github
+
   palette:
     scheme: slate
 
@@ -23,3 +27,6 @@ theme:
 
 plugins:
   - search
+
+extra_css:
+  - stylesheets/extra.css
