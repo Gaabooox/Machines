@@ -1,8 +1,10 @@
 const homeScriptUrl = new URL(document.currentScript.src);
+
 const machinesJsonUrl = new URL(
     "../assets/data/machines.json",
     homeScriptUrl
 );
+
 
 document.addEventListener("DOMContentLoaded", async function () {
     const machinesCounter = document.getElementById(
@@ -17,13 +19,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         "home-writeups-count"
     );
 
-    if (
-        !machinesCounter &&
-        !platformsCounter &&
-        !writeupsCounter
-    ) {
-        return;
-    }
+    const recentMachinesContainer = document.querySelector(
+        ".machines-grid"
+    );
+
+    const platformIndicator = document.querySelector(
+        ".section-counter"
+    );
+
 
     try {
         const response = await fetch(machinesJsonUrl);
@@ -46,6 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             return machine.status === "Completada";
         });
 
+
         if (machinesCounter) {
             machinesCounter.textContent = machines.length;
         }
@@ -57,10 +61,90 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (writeupsCounter) {
             writeupsCounter.textContent = completedWriteups.length;
         }
+
+
+        if (platformIndicator) {
+            const platformNames = [
+                ...new Set(
+                    machines.map(function (machine) {
+                        return machine.platform;
+                    })
+                )
+            ];
+
+            platformIndicator.textContent = platformNames.join(" · ");
+        }
+
+
+        if (recentMachinesContainer) {
+            const recentMachines = machines
+                .slice(-4)
+                .reverse();
+
+            recentMachinesContainer.innerHTML = recentMachines
+                .map(createRecentMachineCard)
+                .join("");
+        }
     } catch (error) {
         console.error(
-            "No se pudieron actualizar las estadísticas:",
+            "No se pudo actualizar la portada:",
             error
         );
     }
 });
+
+
+function createRecentMachineCard(machine) {
+    const initial = machine.name
+        ? machine.name.charAt(0).toUpperCase()
+        : "?";
+
+    const tags = Array.isArray(machine.tags)
+        ? machine.tags.slice(0, 3)
+        : [];
+
+    const tagsHtml = tags
+        .map(function (tag) {
+            return `<span>${escapeHtml(tag)}</span>`;
+        })
+        .join("");
+
+    return `
+        <a
+            class="machine-card"
+            href="${escapeHtml(machine.path)}"
+        >
+            <div class="machine-card-header">
+                <div class="machine-icon">
+                    ${escapeHtml(initial)}
+                </div>
+
+                <span class="difficulty-badge">
+                    ${escapeHtml(machine.difficulty)}
+                </span>
+            </div>
+
+            <h3>${escapeHtml(machine.name)}</h3>
+
+            <p>
+                ${escapeHtml(machine.platform)}
+                ·
+                ${escapeHtml(machine.operatingSystem)}
+            </p>
+
+            <div class="machine-tags">
+                ${tagsHtml}
+            </div>
+        </a>
+    `;
+}
+
+
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
