@@ -1,0 +1,103 @@
+[
+  {
+    "name": "BorazuwarahCTF",
+    "slug": "borazuwarahctf",
+    "platform": "DockerLabs",
+    "platformSlug": "dockerlabs",
+    "difficulty": "Very Easy",
+    "difficultySlug": "very-easy",
+    "operatingSystem": "Linux",
+    "status": "Completada",
+    "path": "dockerlabs/very-easy/borazuwarahctf/",
+    "tags": [
+      "Nmap",
+      "SSH",
+      "ExifTool",
+      "Hydra",
+      "Esteganografía",
+      "Sudo"
+    ]
+  },
+  {
+    "name": "BreakMySsh",
+    "slug": "breakmyssh",
+    "platform": "DockerLabs",
+    "platformSlug": "dockerlabs",
+    "difficulty": "Very Easy",
+    "difficultySlug": "very-easy",
+    "operatingSystem": "Linux",
+    "status": "Completada",
+    "path": "dockerlabs/very-easy/breakmyssh/",
+    "tags": [
+      "Nmap",
+      "SSH",
+      "Hydra",
+      "Fuerza bruta"
+    ]
+  },
+  {
+    "name": "FirstHacking",
+    "slug": "firsthacking",
+    "platform": "DockerLabs",
+    "platformSlug": "dockerlabs",
+    "difficulty": "Very Easy",
+    "difficultySlug": "very-easy",
+    "operatingSystem": "Linux",
+    "status": "Completada",
+    "path": "dockerlabs/very-easy/firsthacking/",
+    "tags": [
+      "Nmap",
+      "Reconocimiento",
+      "Enumeración"
+    ]
+  },
+  {
+    "name": "HedgeHog",
+    "slug": "hedgehog",
+    "platform": "DockerLabs",
+    "platformSlug": "dockerlabs",
+    "difficulty": "Very Easy",
+    "difficultySlug": "very-easy",
+    "operatingSystem": "Linux",
+    "status": "Completada",
+    "path": "dockerlabs/very-easy/hedgehog/",
+    "tags": [
+      "Nmap",
+      "Linux",
+      "Escalada de privilegios"
+    ]
+  },
+  {
+    "name": "Trust",
+    "slug": "trust",
+    "platform": "DockerLabs",
+    "platformSlug": "dockerlabs",
+    "difficulty": "Very Easy",
+    "difficultySlug": "very-easy",
+    "operatingSystem": "Linux",
+    "status": "Completada",
+    "path": "dockerlabs/very-easy/trust/",
+    "tags": [
+      "Nmap",
+      "SSH",
+      "Enumeración"
+    ]
+  },
+  {
+    "name": "Vacaciones",
+    "slug": "vacaciones",
+    "platform": "DockerLabs",
+    "platformSlug": "dockerlabs",
+    "difficulty": "Very Easy",
+    "difficultySlug": "very-easy",
+    "operatingSystem": "Linux",
+    "status": "Completada",
+    "path": "dockerlabs/very-easy/vacaciones/",
+    "tags": [
+      "Nmap",
+      "Web",
+      "Linux",
+      "Escalada de privilegios"
+    ]
+  }
+]
