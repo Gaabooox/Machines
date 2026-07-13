@@ -9,6 +9,7 @@ repo_url: https://github.com/Gaabooox/Machines
 nav:
   - Inicio: index.md
   - Máquinas: machines/index.md
+  - Plataformas: platforms/index.md
   - Sobre mí: about.md
 
 not_in_nav: |
@@ -20,6 +21,7 @@ not_in_nav: |
 theme:
   name: material
   language: es
+  favicon: assets/images/skull-mark.svg
 
   icon:
     logo: fontawesome/solid/skull
@@ -29,23 +31,31 @@ theme:
     scheme: slate
 
   features:
-    - navigation.tabs
-    - navigation.sections
     - navigation.top
+    - toc.follow
     - search.suggest
     - search.highlight
     - content.code.copy
-    - toc.follow
+    - content.code.annotate
 
 plugins:
   - search
 
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+
 extra_css:
-  - stylesheets/extra.css
-  - stylesheets/catalog.css
-  - stylesheets/about.css
-  - stylesheets/writeup.css
+  - stylesheets/final.css
 
 extra_javascript:
-  - javascripts/machines.js
-  - javascripts/home.js
+  - javascripts/site.js

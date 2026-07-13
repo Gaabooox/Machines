@@ -1,67 +1,36 @@
 ---
 title: BreakMySsh
-description: Resolución de la máquina BreakMySsh de DockerLabs
+description: 'Resolución de la máquina BreakMySsh de DockerLabs'
+hide:
+  - navigation
+  - toc
 ---
 
-<div class="writeup-hero">
+<section
+  class="writeup-intro"
+  data-name="BreakMySsh"
+  data-platform="DockerLabs"
+  data-difficulty="Very Easy"
+  data-os="Linux"
+  data-status="Completada"
+  data-access="SSH como root"
+  data-escalation="No necesaria"
+  data-date=""
+  data-techniques="Nmap|SSH|Hydra|Fuerza bruta"
+>
 
-  <div class="writeup-hero-content">
+  <h1>BreakMySsh</h1>
 
-    <h1>BreakMySsh</h1>
-
-    <p class="writeup-hero-description">
-      Máquina enfocada en reconocimiento de servicios, enumeración de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario root.
-    </p>
-
-    <div class="writeup-badges">
-      <span class="writeup-badge">DockerLabs</span>
-      <span class="writeup-badge writeup-badge-success">Very Easy</span>
-      <span class="writeup-badge">Linux</span>
-      <span class="writeup-badge">Completada</span>
-    </div>
-
+  <div class="writeup-inline-badges">
+    <span>DockerLabs</span>
+    <span class="difficulty">Very Easy</span>
+    <span>Linux</span>
+    <span>Completada</span>
   </div>
 
-  <div class="writeup-summary">
+  <p>M&#225;quina enfocada en reconocimiento de servicios, enumeraci&#243;n de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario root.</p>
 
-    <div class="writeup-summary-row">
-      <span>Plataforma</span>
-      <strong>DockerLabs</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Dificultad</span>
-      <strong>Very Easy</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Sistema</span>
-      <strong>Linux</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Acceso inicial</span>
-      <strong>SSH como root</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Escalada</span>
-      <strong>No necesaria</strong>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="writeup-techniques">
-  <span class="writeup-technique">Nmap</span>
-  <span class="writeup-technique">SSH</span>
-  <span class="writeup-technique">Hydra</span>
-  <span class="writeup-technique">Fuerza bruta</span>
-  <span class="writeup-technique">Diccionarios</span>
-  <span class="writeup-technique">Enumeración</span>
-</div>
-
+</section>
 ## 1. Preparación de la máquina
 
 Primero se desplegó la máquina BreakMySsh desde DockerLabs.
@@ -264,4 +233,5 @@ La resolución siguió este flujo:
 8. Acceso directo como usuario `root`.
 
 El problema principal no fue únicamente la versión de OpenSSH, sino la combinación de autenticación directa como `root`, una contraseña débil y la ausencia de controles efectivos contra ataques de fuerza bruta.
+
 

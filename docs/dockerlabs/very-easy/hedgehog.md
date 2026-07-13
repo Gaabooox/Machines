@@ -1,69 +1,36 @@
 ---
 title: HedgeHog
-description: Resolución de la máquina HedgeHog de DockerLabs
+description: 'Resolución de la máquina HedgeHog de DockerLabs'
+hide:
+  - navigation
+  - toc
 ---
 
-<div class="writeup-hero">
+<section
+  class="writeup-intro"
+  data-name="HedgeHog"
+  data-platform="DockerLabs"
+  data-difficulty="Very Easy"
+  data-os="Linux"
+  data-status="Completada"
+  data-access="SSH como tails"
+  data-escalation="tails → sonic → root"
+  data-date=""
+  data-techniques="Nmap|Linux|Escalada de privilegios"
+>
 
-  <div class="writeup-hero-content">
+  <h1>HedgeHog</h1>
 
-    <h1>HedgeHog</h1>
-
-    <p class="writeup-hero-description">
-      Máquina enfocada en enumeración web, interpretación de pistas, fuerza bruta contra SSH y escalada de privilegios mediante permisos inseguros de sudo.
-    </p>
-
-    <div class="writeup-badges">
-      <span class="writeup-badge">DockerLabs</span>
-      <span class="writeup-badge writeup-badge-success">Very Easy</span>
-      <span class="writeup-badge">Linux</span>
-      <span class="writeup-badge">Completada</span>
-    </div>
-
+  <div class="writeup-inline-badges">
+    <span>DockerLabs</span>
+    <span class="difficulty">Very Easy</span>
+    <span>Linux</span>
+    <span>Completada</span>
   </div>
 
-  <div class="writeup-summary">
+  <p>M&#225;quina enfocada en enumeraci&#243;n web, interpretaci&#243;n de pistas, fuerza bruta contra SSH y escalada mediante permisos inseguros de sudo.</p>
 
-    <div class="writeup-summary-row">
-      <span>Plataforma</span>
-      <strong>DockerLabs</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Dificultad</span>
-      <strong>Very Easy</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Sistema</span>
-      <strong>Linux</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Acceso inicial</span>
-      <strong>SSH como tails</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Escalada</span>
-      <strong>tails → sonic → root</strong>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="writeup-techniques">
-  <span class="writeup-technique">Nmap</span>
-  <span class="writeup-technique">HTTP</span>
-  <span class="writeup-technique">SSH</span>
-  <span class="writeup-technique">Hydra</span>
-  <span class="writeup-technique">Gobuster</span>
-  <span class="writeup-technique">tac</span>
-  <span class="writeup-technique">sed</span>
-  <span class="writeup-technique">Sudo</span>
-</div>
-
+</section>
 ## 1. Preparación de la máquina
 
 Se desplegó la máquina HedgeHog desde DockerLabs.
@@ -284,5 +251,6 @@ La resolución combinó:
 8. Escalada final hasta `root`.
 
 La debilidad principal fue la combinación de credenciales débiles y una cadena de permisos sudo excesivos.
+
 
 

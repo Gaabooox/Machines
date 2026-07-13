@@ -1,69 +1,36 @@
 ---
 title: Trust
-description: Resolución de la máquina Trust de DockerLabs
+description: 'Resolución de la máquina Trust de DockerLabs'
+hide:
+  - navigation
+  - toc
 ---
 
-<div class="writeup-hero">
+<section
+  class="writeup-intro"
+  data-name="Trust"
+  data-platform="DockerLabs"
+  data-difficulty="Very Easy"
+  data-os="Linux"
+  data-status="Completada"
+  data-access="SSH como mario"
+  data-escalation="Vim mediante sudo"
+  data-date=""
+  data-techniques="Nmap|SSH|Enumeraci&#243;n"
+>
 
-  <div class="writeup-hero-content">
+  <h1>Trust</h1>
 
-    <h1>Trust</h1>
-
-    <p class="writeup-hero-description">
-      Máquina enfocada en fuzzing de rutas web, descubrimiento de usuarios, fuerza bruta contra SSH y escalada de privilegios mediante Vim ejecutado con sudo.
-    </p>
-
-    <div class="writeup-badges">
-      <span class="writeup-badge">DockerLabs</span>
-      <span class="writeup-badge writeup-badge-success">Very Easy</span>
-      <span class="writeup-badge">Linux</span>
-      <span class="writeup-badge">Completada</span>
-    </div>
-
+  <div class="writeup-inline-badges">
+    <span>DockerLabs</span>
+    <span class="difficulty">Very Easy</span>
+    <span>Linux</span>
+    <span>Completada</span>
   </div>
 
-  <div class="writeup-summary">
+  <p>M&#225;quina enfocada en fuzzing web, descubrimiento de usuarios, fuerza bruta contra SSH y escalada mediante Vim ejecutado con sudo.</p>
 
-    <div class="writeup-summary-row">
-      <span>Plataforma</span>
-      <strong>DockerLabs</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Dificultad</span>
-      <strong>Very Easy</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Sistema</span>
-      <strong>Linux</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Acceso inicial</span>
-      <strong>SSH como mario</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Escalada</span>
-      <strong>Vim mediante sudo</strong>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="writeup-techniques">
-  <span class="writeup-technique">Nmap</span>
-  <span class="writeup-technique">Gobuster</span>
-  <span class="writeup-technique">Fuzzing</span>
-  <span class="writeup-technique">HTTP</span>
-  <span class="writeup-technique">SSH</span>
-  <span class="writeup-technique">Hydra</span>
-  <span class="writeup-technique">Vim</span>
-  <span class="writeup-technique">Sudo</span>
-</div>
-
+</section>
 ## 1. Preparación de la máquina
 
 Se desplegó la máquina Trust desde DockerLabs.
@@ -282,5 +249,6 @@ La resolución siguió este flujo:
 10. Obtención de una shell como `root`.
 
 La vulnerabilidad crítica fue permitir que un usuario sin privilegios ejecutara Vim como superusuario.
+
 
 

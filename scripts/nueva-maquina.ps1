@@ -1,12 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-
 function Convert-ToSlug {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Text
-    )
+    param([Parameter(Mandatory)][string]$Text)
 
     $normalized = $Text.Normalize(
         [System.Text.NormalizationForm]::FormD
@@ -32,240 +28,150 @@ function Convert-ToSlug {
 
     $slug = $cleanText.ToLowerInvariant()
     $slug = $slug -replace "[^a-z0-9]+", "-"
-    $slug = $slug.Trim("-")
-
-    return $slug
+    return $slug.Trim("-")
 }
-
 
 function Select-MenuOption {
     param(
-        [Parameter(Mandatory)]
-        [string]$Title,
-
-        [Parameter(Mandatory)]
-        [array]$Options
+        [Parameter(Mandatory)][string]$Title,
+        [Parameter(Mandatory)][array]$Options
     )
 
     while ($true) {
         Write-Host ""
         Write-Host $Title
-        Write-Host "-------------------------------------"
+        Write-Host ("-" * 45)
 
         for ($index = 0; $index -lt $Options.Count; $index++) {
-            $number = $index + 1
-            Write-Host "$number) $($Options[$index].Name)"
+            Write-Host "$($index + 1)) $($Options[$index].Name)"
         }
 
         Write-Host ""
-
         $selection = Read-Host "Opción"
         $selectedNumber = 0
 
-        $isNumber = [int]::TryParse(
-            $selection,
-            [ref]$selectedNumber
-        )
-
         if (
-            $isNumber -and
+            [int]::TryParse($selection, [ref]$selectedNumber) -and
             $selectedNumber -ge 1 -and
             $selectedNumber -le $Options.Count
         ) {
             return $Options[$selectedNumber - 1]
         }
 
-        Write-Host ""
-        Write-Host "Opción inválida. Elige uno de los números mostrados."
+        Write-Host "Opción inválida."
     }
 }
 
+function Read-RequiredValue {
+    param([Parameter(Mandatory)][string]$Prompt)
+
+    do {
+        $value = Read-Host $Prompt
+
+        if ([string]::IsNullOrWhiteSpace($value)) {
+            Write-Host "Este campo es obligatorio."
+        }
+    }
+    while ([string]::IsNullOrWhiteSpace($value))
+
+    return $value.Trim()
+}
 
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
-
-$templatePath = Join-Path `
-    $repositoryRoot `
-    "templates\writeup-template.md"
-
+$templatePath = Join-Path $repositoryRoot "templates\writeup-template.md"
+$registrarPath = Join-Path $PSScriptRoot "registrar-en-catalogo.ps1"
 
 if (-not (Test-Path $templatePath)) {
-    Write-Host ""
-    Write-Host "Error: no se encontró la plantilla:"
-    Write-Host $templatePath
-    exit 1
+    throw "No existe la plantilla: $templatePath"
 }
 
+if (-not (Test-Path $registrarPath)) {
+    throw "No existe el registrador: $registrarPath"
+}
 
 $platformOptions = @(
-    [PSCustomObject]@{
-        Name = "DockerLabs"
-        Slug = "dockerlabs"
-    }
-
-    [PSCustomObject]@{
-        Name = "Hack The Box"
-        Slug = "hackthebox"
-    }
-
-    [PSCustomObject]@{
-        Name = "TryHackMe"
-        Slug = "tryhackme"
-    }
-
-    [PSCustomObject]@{
-        Name = "VulnHub"
-        Slug = "vulnhub"
-    }
-
-    [PSCustomObject]@{
-        Name = "Otra plataforma"
-        Slug = "custom"
-    }
+    [PSCustomObject]@{ Name = "DockerLabs"; Slug = "dockerlabs" }
+    [PSCustomObject]@{ Name = "Hack The Box"; Slug = "hackthebox" }
+    [PSCustomObject]@{ Name = "TryHackMe"; Slug = "tryhackme" }
+    [PSCustomObject]@{ Name = "VulnHub"; Slug = "vulnhub" }
+    [PSCustomObject]@{ Name = "Otra plataforma"; Slug = "custom" }
 )
-
 
 $difficultyOptions = @(
-    [PSCustomObject]@{
-        Name = "Very Easy"
-        Slug = "very-easy"
-    }
-
-    [PSCustomObject]@{
-        Name = "Easy"
-        Slug = "easy"
-    }
-
-    [PSCustomObject]@{
-        Name = "Medium"
-        Slug = "medium"
-    }
-
-    [PSCustomObject]@{
-        Name = "Hard"
-        Slug = "hard"
-    }
-
-    [PSCustomObject]@{
-        Name = "Insane"
-        Slug = "insane"
-    }
-
-    [PSCustomObject]@{
-        Name = "Otra dificultad"
-        Slug = "custom"
-    }
+    [PSCustomObject]@{ Name = "Very Easy"; Slug = "very-easy" }
+    [PSCustomObject]@{ Name = "Easy"; Slug = "easy" }
+    [PSCustomObject]@{ Name = "Medium"; Slug = "medium" }
+    [PSCustomObject]@{ Name = "Hard"; Slug = "hard" }
+    [PSCustomObject]@{ Name = "Insane"; Slug = "insane" }
+    [PSCustomObject]@{ Name = "Otra dificultad"; Slug = "custom" }
 )
 
-
-$operatingSystemOptions = @(
-    [PSCustomObject]@{
-        Name = "Linux"
-        Slug = "linux"
-    }
-
-    [PSCustomObject]@{
-        Name = "Windows"
-        Slug = "windows"
-    }
-
-    [PSCustomObject]@{
-        Name = "Otro sistema"
-        Slug = "custom"
-    }
+$osOptions = @(
+    [PSCustomObject]@{ Name = "Linux"; Slug = "linux" }
+    [PSCustomObject]@{ Name = "Windows"; Slug = "windows" }
+    [PSCustomObject]@{ Name = "Otro sistema"; Slug = "custom" }
 )
-
 
 Write-Host ""
-Write-Host "====================================="
+Write-Host "==============================================="
 Write-Host " GENERADOR DE WRITEUPS"
-Write-Host "====================================="
-Write-Host ""
+Write-Host "==============================================="
 
-
-do {
-    $machineName = Read-Host "Nombre de la máquina"
-
-    if ([string]::IsNullOrWhiteSpace($machineName)) {
-        Write-Host "El nombre de la máquina es obligatorio."
-    }
-}
-while ([string]::IsNullOrWhiteSpace($machineName))
-
-
-$platform = Select-MenuOption `
-    -Title "Selecciona la plataforma" `
-    -Options $platformOptions
-
+$machineName = Read-RequiredValue "Nombre de la máquina"
+$platform = Select-MenuOption "Selecciona la plataforma" $platformOptions
+$difficulty = Select-MenuOption "Selecciona la dificultad" $difficultyOptions
+$operatingSystem = Select-MenuOption "Selecciona el sistema operativo" $osOptions
 
 if ($platform.Slug -eq "custom") {
-    do {
-        $customPlatform = Read-Host "Nombre de la plataforma"
-    }
-    while ([string]::IsNullOrWhiteSpace($customPlatform))
-
+    $customValue = Read-RequiredValue "Nombre de la plataforma"
     $platform = [PSCustomObject]@{
-        Name = $customPlatform
-        Slug = Convert-ToSlug $customPlatform
+        Name = $customValue
+        Slug = Convert-ToSlug $customValue
     }
 }
-
-
-$difficulty = Select-MenuOption `
-    -Title "Selecciona la dificultad" `
-    -Options $difficultyOptions
-
 
 if ($difficulty.Slug -eq "custom") {
-    do {
-        $customDifficulty = Read-Host "Nombre de la dificultad"
-    }
-    while ([string]::IsNullOrWhiteSpace($customDifficulty))
-
+    $customValue = Read-RequiredValue "Nombre de la dificultad"
     $difficulty = [PSCustomObject]@{
-        Name = $customDifficulty
-        Slug = Convert-ToSlug $customDifficulty
+        Name = $customValue
+        Slug = Convert-ToSlug $customValue
     }
 }
-
-
-$operatingSystem = Select-MenuOption `
-    -Title "Selecciona el sistema operativo" `
-    -Options $operatingSystemOptions
-
 
 if ($operatingSystem.Slug -eq "custom") {
-    do {
-        $customOperatingSystem = Read-Host "Nombre del sistema operativo"
-    }
-    while ([string]::IsNullOrWhiteSpace($customOperatingSystem))
-
+    $customValue = Read-RequiredValue "Nombre del sistema operativo"
     $operatingSystem = [PSCustomObject]@{
-        Name = $customOperatingSystem
-        Slug = Convert-ToSlug $customOperatingSystem
+        Name = $customValue
+        Slug = Convert-ToSlug $customValue
     }
 }
 
-Write-Host ""
-$tagsInput = Read-Host "Etiquetas separadas por comas (ejemplo: Nmap, SSH, Hydra)"
+$summary = Read-RequiredValue "Descripción corta de la máquina"
+$access = Read-RequiredValue "Método de acceso inicial"
+$escalation = Read-RequiredValue "Método de escalada o 'No necesaria'"
 
-if ([string]::IsNullOrWhiteSpace($tagsInput)) {
-    $tags = @()
+$dateInput = Read-Host "Fecha de resolución (YYYY-MM-DD, Enter para hoy)"
+$date = if ([string]::IsNullOrWhiteSpace($dateInput)) {
+    Get-Date -Format "yyyy-MM-dd"
 }
 else {
-    $tags = @(
+    $dateInput.Trim()
+}
+
+$tagsInput = Read-Host "Técnicas separadas por comas (Nmap, SSH, Hydra)"
+
+$tags = if ([string]::IsNullOrWhiteSpace($tagsInput)) {
+    @()
+}
+else {
+    @(
         $tagsInput -split "," |
-        ForEach-Object {
-            $_.Trim()
-        } |
-        Where-Object {
-            -not [string]::IsNullOrWhiteSpace($_)
-        }
+        ForEach-Object { $_.Trim() } |
+        Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
     )
 }
 
-
 $machineSlug = Convert-ToSlug $machineName
-
 $destinationDirectory = Join-Path `
     $repositoryRoot `
     "docs\$($platform.Slug)\$($difficulty.Slug)"
@@ -278,106 +184,57 @@ $imagesDirectory = Join-Path `
     $repositoryRoot `
     "docs\assets\images\$($platform.Slug)\$machineSlug"
 
-
 if (Test-Path $destinationFile) {
-    Write-Host ""
-    Write-Host "Error: ya existe un writeup para esa máquina:"
-    Write-Host $destinationFile
-    exit 1
+    throw "Ya existe el writeup: $destinationFile"
 }
 
+New-Item -ItemType Directory -Force -Path $destinationDirectory | Out-Null
+New-Item -ItemType Directory -Force -Path $imagesDirectory | Out-Null
 
-New-Item `
-    -ItemType Directory `
-    -Force `
-    -Path $destinationDirectory |
-    Out-Null
+$content = Get-Content -Path $templatePath -Raw -Encoding utf8
 
-
-New-Item `
-    -ItemType Directory `
-    -Force `
-    -Path $imagesDirectory |
-    Out-Null
-
-
-$content = Get-Content `
-    -Path $templatePath `
-    -Raw `
-    -Encoding utf8
-
-
-$content = $content.Replace(
-    "NOMBRE_MAQUINA",
-    $machineName
-)
-
-$content = $content.Replace(
-    "PLATAFORMA",
-    $platform.Name
-)
-
-$content = $content.Replace(
-    "DIFICULTAD",
-    $difficulty.Name
-)
-
-$content = $content.Replace(
-    "SISTEMA_OPERATIVO",
-    $operatingSystem.Name
-)
-
-
-Set-Content `
-    -Path $destinationFile `
-    -Value $content `
-    -Encoding utf8
-$catalogScript = Join-Path `
-    $PSScriptRoot `
-    "registrar-en-catalogo.ps1"
-
-
-if (-not (Test-Path $catalogScript)) {
-    Write-Host ""
-    Write-Host "Error: no se encontró el registrador del catálogo:"
-    Write-Host $catalogScript
-
-    Remove-Item $destinationFile -Force
-    exit 1
+$replacements = [ordered]@{
+    "{{NAME}}" = $machineName
+    "{{PLATFORM}}" = $platform.Name
+    "{{DIFFICULTY}}" = $difficulty.Name
+    "{{OS}}" = $operatingSystem.Name
+    "{{SUMMARY}}" = $summary
+    "{{ACCESS}}" = $access
+    "{{ESCALATION}}" = $escalation
+    "{{DATE}}" = $date
+    "{{TECHNIQUES_PIPE}}" = ($tags -join "|")
 }
 
-
-$catalogParameters = @{
-    Name            = $machineName
-    Slug            = $machineSlug
-    Platform        = $platform.Name
-    PlatformSlug    = $platform.Slug
-    Difficulty      = $difficulty.Name
-    DifficultySlug  = $difficulty.Slug
-    OperatingSystem = $operatingSystem.Name
-    Tags            = $tags
+foreach ($item in $replacements.GetEnumerator()) {
+    $content = $content.Replace($item.Key, $item.Value)
 }
 
+[System.IO.File]::WriteAllText(
+    $destinationFile,
+    $content,
+    [System.Text.UTF8Encoding]::new($false)
+)
 
-& $catalogScript @catalogParameters
+& $registrarPath `
+    -Name $machineName `
+    -Slug $machineSlug `
+    -Platform $platform.Name `
+    -PlatformSlug $platform.Slug `
+    -Difficulty $difficulty.Name `
+    -DifficultySlug $difficulty.Slug `
+    -OperatingSystem $operatingSystem.Name `
+    -Summary $summary `
+    -Access $access `
+    -Escalation $escalation `
+    -Date $date `
+    -Tags $tags
 
 Write-Host ""
-Write-Host "====================================="
+Write-Host "==============================================="
 Write-Host " WRITEUP CREADO"
-Write-Host "====================================="
-Write-Host ""
-Write-Host "Máquina:     $machineName"
-Write-Host "Plataforma:  $($platform.Name)"
-Write-Host "Dificultad:  $($difficulty.Name)"
-Write-Host "Sistema:     $($operatingSystem.Name)"
-Write-Host ""
-Write-Host "Archivo:"
-Write-Host $destinationFile
-Write-Host ""
-Write-Host "Carpeta preparada para imágenes:"
-Write-Host $imagesDirectory
-Write-Host ""
-Write-Host "Las capturas siguen marcadas como IMAGEN PENDIENTE."
+Write-Host "==============================================="
+Write-Host "Archivo:  $destinationFile"
+Write-Host "Imágenes: $imagesDirectory"
 Write-Host ""
 
 notepad $destinationFile

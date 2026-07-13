@@ -5,59 +5,53 @@ hide:
   - toc
 ---
 
-<div class="machines-page">
+<main class="machines-page">
 
-  <header class="machines-page-header">
-    <p class="section-eyebrow">Portafolio técnico</p>
-
+  <header class="page-heading">
     <h1>Todas las máquinas</h1>
-
-    <p>
-      Catálogo de máquinas resueltas y documentadas durante mi
-      aprendizaje de ciberseguridad.
-    </p>
+    <p>Explora todos los laboratorios que he resuelto y documentado.</p>
   </header>
 
-  <section class="machines-toolbar">
+  <section class="machine-filters" aria-label="Filtros del catálogo">
 
-    <div class="machines-filter">
-      <span>Plataforma</span>
-      <strong>Todas</strong>
-    </div>
+    <label class="select-control">
+      <span class="sr-only">Plataforma</span>
+      <select id="platform-filter">
+        <option value="">Todas las plataformas</option>
+      </select>
+    </label>
 
-    <div class="machines-filter">
-      <span>Dificultad</span>
-      <strong>Todas</strong>
-    </div>
+    <label class="select-control">
+      <span class="sr-only">Dificultad</span>
+      <select id="difficulty-filter">
+        <option value="">Todas las dificultades</option>
+      </select>
+    </label>
 
-    <div class="machines-filter">
-      <span>Sistema</span>
-      <strong>Todos</strong>
-    </div>
+    <label class="select-control">
+      <span class="sr-only">Sistema operativo</span>
+      <select id="os-filter">
+        <option value="">Todos los sistemas</option>
+      </select>
+    </label>
 
-    <div class="machines-search">
-      <span>⌕</span>
-
+    <label class="catalog-search">
+      <span class="catalog-search-icon" aria-hidden="true"></span>
       <input
-        type="search"
         id="machine-search"
-        placeholder="Buscar máquina, técnica o plataforma..."
+        type="search"
+        placeholder="Buscar máquinas..."
         autocomplete="off"
       >
-    </div>
+    </label>
 
   </section>
 
-  <section
-    class="all-machines-list"
-    id="machines-list"
-  >
-    <div class="machines-loading">
-      Cargando máquinas...
-    </div>
+  <section class="machine-list" id="machines-list">
+    <div class="loading-card">Cargando máquinas...</div>
   </section>
 
-  <p class="machines-result-count">
+  <p class="result-count">
     Mostrando
     <strong id="visible-machines">0</strong>
     de
@@ -65,4 +59,4 @@ hide:
     máquinas
   </p>
 
-</div>
+</main>

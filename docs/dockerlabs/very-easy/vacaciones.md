@@ -1,69 +1,36 @@
 ---
 title: Vacaciones
-description: Resolución de la máquina Vacaciones de DockerLabs
+description: 'Resolución de la máquina Vacaciones de DockerLabs'
+hide:
+  - navigation
+  - toc
 ---
 
-<div class="writeup-hero">
+<section
+  class="writeup-intro"
+  data-name="Vacaciones"
+  data-platform="DockerLabs"
+  data-difficulty="Very Easy"
+  data-os="Linux"
+  data-status="Completada"
+  data-access="SSH como camilo"
+  data-escalation="Ruby mediante sudo"
+  data-date=""
+  data-techniques="Nmap|Web|Linux|Escalada de privilegios"
+>
 
-  <div class="writeup-hero-content">
+  <h1>Vacaciones</h1>
 
-    <h1>Vacaciones</h1>
-
-    <p class="writeup-hero-description">
-      Máquina enfocada en inspección de código HTML, fuerza bruta contra SSH, movimiento entre usuarios y escalada de privilegios mediante Ruby ejecutado con sudo.
-    </p>
-
-    <div class="writeup-badges">
-      <span class="writeup-badge">DockerLabs</span>
-      <span class="writeup-badge writeup-badge-success">Very Easy</span>
-      <span class="writeup-badge">Linux</span>
-      <span class="writeup-badge">Completada</span>
-    </div>
-
+  <div class="writeup-inline-badges">
+    <span>DockerLabs</span>
+    <span class="difficulty">Very Easy</span>
+    <span>Linux</span>
+    <span>Completada</span>
   </div>
 
-  <div class="writeup-summary">
+  <p>M&#225;quina enfocada en inspecci&#243;n de HTML, fuerza bruta contra SSH, movimiento entre usuarios y escalada mediante Ruby ejecutado con sudo.</p>
 
-    <div class="writeup-summary-row">
-      <span>Plataforma</span>
-      <strong>DockerLabs</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Dificultad</span>
-      <strong>Very Easy</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Sistema</span>
-      <strong>Linux</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Acceso inicial</span>
-      <strong>SSH como camilo</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Escalada</span>
-      <strong>Ruby mediante sudo</strong>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="writeup-techniques">
-  <span class="writeup-technique">Nmap</span>
-  <span class="writeup-technique">HTML</span>
-  <span class="writeup-technique">SSH</span>
-  <span class="writeup-technique">Hydra</span>
-  <span class="writeup-technique">find</span>
-  <span class="writeup-technique">Movimiento lateral</span>
-  <span class="writeup-technique">Ruby</span>
-  <span class="writeup-technique">Sudo</span>
-</div>
-
+</section>
 ## 1. Preparación de la máquina
 
 Se desplegó la máquina Vacaciones desde DockerLabs.
@@ -293,5 +260,6 @@ La resolución siguió este flujo:
 11. Obtención de acceso como `root`.
 
 La vulnerabilidad principal fue la combinación de exposición de usuarios, credenciales débiles, almacenamiento inseguro de contraseñas y permisos sudo excesivos.
+
 
 

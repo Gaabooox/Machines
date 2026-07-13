@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Skull">
+  <g fill="none" stroke="#f2f4f7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 28C14 16 21 9 32 9s18 7 18 19c0 8-4 13-9 16v8H23v-8c-5-3-9-8-9-16Z"/>
+    <path d="M22 28 29 31 24 37 19 34Z" fill="#f2f4f7"/>
+    <path d="m42 28-7 3 5 6 5-3Z" fill="#f2f4f7"/>
+    <path d="m32 34-3 6h6Z" fill="#f2f4f7"/>
+    <path d="M25 45v7M30 45v7M35 45v7M40 45v7"/>
+  </g>
+</svg>

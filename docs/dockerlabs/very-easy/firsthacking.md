@@ -1,66 +1,36 @@
 ---
 title: FirstHacking
-description: Resolución de la máquina FirstHacking de DockerLabs
+description: 'Resolución de la máquina FirstHacking de DockerLabs'
+hide:
+  - navigation
+  - toc
 ---
 
-<div class="writeup-hero">
+<section
+  class="writeup-intro"
+  data-name="FirstHacking"
+  data-platform="DockerLabs"
+  data-difficulty="Very Easy"
+  data-os="Linux"
+  data-status="Completada"
+  data-access="Backdoor de vsftpd"
+  data-escalation="No necesaria"
+  data-date=""
+  data-techniques="Nmap|Reconocimiento|Enumeraci&#243;n"
+>
 
-  <div class="writeup-hero-content">
+  <h1>FirstHacking</h1>
 
-    <h1>FirstHacking</h1>
-
-    <p class="writeup-hero-description">
-      Máquina enfocada en reconocimiento de servicios, enumeración FTP, búsqueda de vulnerabilidades conocidas y explotación de una versión vulnerable de vsftpd.
-    </p>
-
-    <div class="writeup-badges">
-      <span class="writeup-badge">DockerLabs</span>
-      <span class="writeup-badge writeup-badge-success">Very Easy</span>
-      <span class="writeup-badge">Linux</span>
-      <span class="writeup-badge">Completada</span>
-    </div>
-
+  <div class="writeup-inline-badges">
+    <span>DockerLabs</span>
+    <span class="difficulty">Very Easy</span>
+    <span>Linux</span>
+    <span>Completada</span>
   </div>
 
-  <div class="writeup-summary">
+  <p>M&#225;quina enfocada en enumeraci&#243;n FTP, b&#250;squeda de vulnerabilidades conocidas y explotaci&#243;n de una versi&#243;n vulnerable de vsftpd.</p>
 
-    <div class="writeup-summary-row">
-      <span>Plataforma</span>
-      <strong>DockerLabs</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Dificultad</span>
-      <strong>Very Easy</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Sistema</span>
-      <strong>Linux</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Acceso inicial</span>
-      <strong>Backdoor de vsftpd</strong>
-    </div>
-
-    <div class="writeup-summary-row">
-      <span>Escalada</span>
-      <strong>No necesaria</strong>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="writeup-techniques">
-  <span class="writeup-technique">Nmap</span>
-  <span class="writeup-technique">FTP</span>
-  <span class="writeup-technique">Searchsploit</span>
-  <span class="writeup-technique">Análisis de exploits</span>
-  <span class="writeup-technique">Backdoor</span>
-</div>
-
+</section>
 ## 1. Preparación de la máquina
 
 Se desplegó la máquina FirstHacking desde DockerLabs.
@@ -226,5 +196,6 @@ La resolución siguió este flujo:
 7. Obtención de acceso como `root`.
 
 La lección principal fue que la versión de un servicio debe comprobarse y relacionarse con vulnerabilidades reales antes de intentar explotarlo.
+
 
 
