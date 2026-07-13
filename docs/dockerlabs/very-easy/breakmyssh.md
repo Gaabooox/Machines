@@ -1,76 +1,230 @@
-# Máquina Break My Ssh #
+---
+title: BreakMySsh
+description: Resolución de la máquina BreakMySsh de DockerLabs
+---
 
-Hoy resolveré la máquina BreakMySsh de la plataforma DockerLabs.
-Temas a tratar:
+# BreakMySsh
 
-- Reconocimiento
-- Fuerza bruta
-- Escala de privilegios
+`DockerLabs` `Very Easy` `Linux` `Completada`
 
-## Paso 1 ##
+Máquina enfocada en reconocimiento de servicios, enumeración de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario `root`.
 
-Activamos la máquina BreakMySsh desde la terminal.
+## Información de la máquina
 
-![Alt Imagen1](https://blogger.googleusercontent.com/img/a/AVvXsEhHL3GTohf06oNNUgLtoa2UDM-dOWO4BTjyW3DQYy6DQQ3zqoQ5d0Nin-784RRYDmbGHqZmfbTITtHHkRXTYa5-SnrIhWcGDhWGvMahCd5x19UmNb00kxCwxbKXuGubasoh7XRKXGiXHByy9Lu3wq-HlTOW14UOU3qFaucn8BiP9rLvj6qzjqw04whQUboP=w399-h147)
+| Campo | Valor |
+|---|---|
+| Plataforma | DockerLabs |
+| Dificultad | Very Easy |
+| Sistema operativo | Linux |
+| Estado | Completada |
+| Servicio principal | SSH |
+| Acceso inicial | Fuerza bruta con Hydra |
+| Usuario obtenido | root |
+| Escalada de privilegios | No fue necesaria |
 
-## Paso 2 ##
+## Técnicas utilizadas
 
-Realizamos un escaneo utlizando la herramienta **Nmap**
+`Nmap` `SSH` `Hydra` `Fuerza bruta` `Diccionarios` `Enumeración`
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEi9iEssywqu0JCrPxFxCSUkEKRCElSjmEHyo1JDeOS_B-QxjEyzMHCkVOvX3tfiksJVGsXX3jJ9zqpYQ3M1mnqcwEWuMKZNPbOYYEJ_rdJFYBI4OoOm8uFNSPJwDuTazp0zHt31bHEcG4QNhA9IFqox3pKWDLB1r9fx6Z7h28eSyhR4fNt-fyUVGE8BGdrf=w481-h358)
+## 1. Preparación de la máquina
 
-- '-p- --open' = Escanea todos los puertos con el estado abierto
-- '-sS'= Es un escaneo SYN que evita que el Three-way handshake se complete
-- '--min-rate' = Envia paquetes no mas lentos que la cantidad que elijas
-- '-n' = Desactiva la resolicion DNS
-- '-Pn' = Toma todos los host como activos para evitar hacer ping a cada uno
-- '-vvv' = Muestra el proceso en pantalla mientras se va escaneando
-- 'oG' = Exporta tu escaneo en un formato grepeable para poder examinarlo mas adelante si se necesita
+Primero se desplegó la máquina BreakMySsh desde DockerLabs.
 
-## Paso 3 ##
+<!-- IMAGEN PENDIENTE: despliegue de la máquina -->
 
-Interpretamos la información obtenida.
+## 2. Reconocimiento de puertos
 
-Tenemos un solo puerto abierto:
+Se realizó un escaneo completo para identificar los puertos TCP abiertos:
 
-- Puerto 22: En este puerto corre el servicio ssh
+```bash
+sudo nmap -p- --open -sS --min-rate 5000 -n -Pn -vvv <IP_OBJETIVO> -oG allPorts
+```
 
-## Paso 4 ##
+### Explicación del comando
 
-Luego de identificar los puertos y el servicio que corre, debemos examinar mas a detalle como la versión y que esta corriendo exactamente.
+| Opción | Función |
+|---|---|
+| `-p-` | Escanea los 65 535 puertos TCP |
+| `--open` | Muestra solamente los puertos abiertos |
+| `-sS` | Realiza un escaneo TCP SYN |
+| `--min-rate 5000` | Solicita una velocidad mínima de 5000 paquetes por segundo |
+| `-n` | Desactiva la resolución DNS |
+| `-Pn` | Omite el descubrimiento previo y trata el objetivo como activo |
+| `-vvv` | Muestra información detallada durante el escaneo |
+| `-oG allPorts` | Guarda el resultado en formato grepeable |
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEixkcODpLPWpzkVWegUo07aQgSeD-XDfzak9HDkj63iA6fnF-FO7eqK35Hn5bfWFe5Fi57Pev0vfoAm7gPxY65DG-vfX8GwkAjNkJW3TYyqVzaYRhdA-E5Z53dqyuPQVToP3hlH9CIuwVRI8_3gh2yp_-W52B_esXjXXrRicsn5YhCFPJz3PKnFQq3y4SIf=w543-h219)
+<!-- IMAGEN PENDIENTE: escaneo inicial con Nmap -->
 
-- 'p-22' = Examina exactamente ese puerto.
-- '-sCV' = Lanza scripts basicos de reconocimiento y detecta la version de este.
+## 3. Puerto encontrado
 
-## Paso 5 ##
+El escaneo mostró un único puerto abierto:
 
-Tenemos el servicio SSH con la version OpenSSH 7.7 protocol 2, como sabemos es una versión muy antigua por lo cual optamos en buscar exploits ya elaborados para esa versión.
+| Puerto | Servicio | Estado |
+|---:|---|---|
+| 22/TCP | SSH | Abierto |
 
-![Alt Imagen3](https://blogger.googleusercontent.com/img/a/AVvXsEiqFy0caQCdtSFunnmgFMfoZoSDvEEVweimQfdGUIjyseI5c9hxFWSztkUv9r4_2GpolArJ2tUvLNEr9NTmC3l1OtjgHZBWJ9Qe8-hKy0yy7HNuPfjF_XYZe2-Swu3pIhbGJYzhGVKf7sG_hXRhMXLIhwhfpAEgYiXnZeSIZ9d7FbPMtZmHlx5o3KVWBqW0=w507-h155)
+El servicio SSH permite administrar una máquina remotamente mediante una conexión cifrada.
 
-![Alt Imagen4](https://blogger.googleusercontent.com/img/a/AVvXsEgbtALMdBkMhsoyGLUFtEu4wuMxqP34Os-OTekcaVHsd6u0_HRkNVcfcx5dF3-a1q4tJhWjuO1Y7Fckf9klQMN1CEcCnzzJJV0j0ZPirCC38AMY7G9G1d4QPvs9Cf_8IMhPvMxE5GtyrBWUXtOPRVDDMApYNrW9CFxzYJNZ8jseVrq-sEaok4mApH1lcmE4=w400-h323)
+## 4. Enumeración del servicio SSH
 
-Examinamos los exploits pero son version python 2, lo cual genera incompatibilidad por lo cual optamos por hacer un ataque de fuerza bruta con hydra.
+Después se realizó un escaneo específico contra el puerto 22:
 
-## Paso 6 ##
+```bash
+sudo nmap -p 22 -sCV <IP_OBJETIVO> -oN targeted
+```
 
-Procedemos a realizar el ataque con hydra al servicio SSH usando un diccionario de usuarios y contraseñas comunes.
+### Explicación
 
-![Alt Imagen5](https://blogger.googleusercontent.com/img/a/AVvXsEh4G3mEhXMOYXToQBa0f3kPEKFa7K4r8WmzHwV5a6AI3a7ez4E1cl-ht5Tsad0Tu-PzKddMWL1GlmBR2iRilrBFBuUIFvLM7q-KVP_E27orj0NTgDfOdWplM0BcN-UDvkbbMW8GD4JxfHIujF7UYO38qNivAaF3Y_R9Xn57b23k-Ryj8OsBm0DQjt2h6aeZ=w580-h145)
+| Opción | Función |
+|---|---|
+| `-p 22` | Analiza únicamente el puerto 22 |
+| `-sC` | Ejecuta los scripts predeterminados de Nmap |
+| `-sV` | Intenta identificar la versión del servicio |
+| `-oN targeted` | Guarda el resultado en formato normal |
 
-- '-L' = Indica el diccionario de usuarios que vamos a probar.
-- '-P'= Indica el diccionario de contraseñas que vamos a usar.
+El resultado identificó una versión de OpenSSH 7.7 utilizando el protocolo SSH 2.
 
-Encontramos el usuario 'root' y la contraseña 'estrella', la cual probaremos para tener acceso mediante SSH.
+<!-- IMAGEN PENDIENTE: enumeración detallada del puerto 22 -->
 
-## Paso 7 ##
+## 5. Investigación de vulnerabilidades
 
-Entramos mediante SSH desde la consola probando el usuario 'root' y la contraseña 'estrella'.
+Se buscó información relacionada con la versión detectada:
 
-![Alt Imagen6](https://blogger.googleusercontent.com/img/a/AVvXsEgflFv6X_196k2PPREwSG00wvl65MK9SpGVIDrWvonnwlW13G9Tn6G2qIelpsTlIXVqGDCuhiJ3CZr4A8L7hr8SloTqC33oq7Ulj8a6Ivgyj7x9Jznxc-6noigvtVfFW8SJ3i5LWCp9WgXwz03bSXahYrXQeZ1ilquXsvrl0Fvlc2FinHzGwdF1assXh0tl=w493-h245)
+```bash
+searchsploit openssh 7.7
+```
 
-Como vemos, el usuario y la contraseña si funcionan y ya contamos con acceso root de la máquina.
+Encontrar una versión antigua no significa automáticamente que exista una vulnerabilidad explotable de forma remota.
 
-Gracias por leer este WriteUp. :)
+Los resultados encontrados debían comprobarse individualmente para determinar:
+
+- Qué sistema operativo afectaban.
+- Qué configuración necesitaban.
+- Si permitían ejecución remota.
+- Si requerían credenciales previas.
+- Si el código seguía siendo compatible.
+
+Algunos exploits encontrados utilizaban Python 2 y no resultaron adecuados para el escenario.
+
+<!-- IMAGEN PENDIENTE: resultados de Searchsploit -->
+
+## 6. Ataque de diccionario contra SSH
+
+Al no encontrar un exploit aplicable, se realizó un ataque de diccionario controlado con Hydra.
+
+Se utilizaron:
+
+- Un diccionario de posibles usuarios.
+- Un diccionario de posibles contraseñas.
+- El servicio SSH como objetivo.
+
+```bash
+hydra \
+    -L usuarios.txt \
+    -P contraseñas.txt \
+    ssh://<IP_OBJETIVO>
+```
+
+### Explicación del comando
+
+| Opción | Función |
+|---|---|
+| `-L usuarios.txt` | Carga una lista de posibles usuarios |
+| `-P contraseñas.txt` | Carga una lista de posibles contraseñas |
+| `ssh://<IP_OBJETIVO>` | Define SSH como servicio objetivo |
+
+Hydra encontró las siguientes credenciales dentro del laboratorio:
+
+```text
+Usuario: root
+Contraseña: estrella
+```
+
+<!-- IMAGEN PENDIENTE: resultado de Hydra -->
+
+## 7. Acceso mediante SSH
+
+Las credenciales encontradas se probaron directamente contra el servicio:
+
+```bash
+ssh root@<IP_OBJETIVO>
+```
+
+Después se introdujo la contraseña:
+
+```text
+estrella
+```
+
+La autenticación fue correcta y se obtuvo acceso directo como `root`.
+
+<!-- IMAGEN PENDIENTE: acceso mediante SSH -->
+
+## 8. Comprobación del acceso
+
+Se comprobó el usuario actual:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+root
+```
+
+También se puede revisar la identidad completa con:
+
+```bash
+id
+```
+
+Al haber iniciado sesión directamente como `root`, no fue necesario realizar una escalada de privilegios adicional.
+
+## 9. Vulnerabilidades encontradas
+
+### Autenticación SSH permitida para root
+
+El servidor permitía iniciar sesión directamente mediante SSH usando la cuenta `root`.
+
+Esto aumenta el impacto de cualquier contraseña débil o filtrada.
+
+### Contraseña débil
+
+La contraseña podía encontrarse utilizando un ataque de diccionario.
+
+### Falta de protección contra intentos repetidos
+
+El servicio permitió realizar múltiples intentos de autenticación automatizados.
+
+Esto indica que no existía una protección efectiva contra fuerza bruta o que era insuficiente.
+
+## 10. Medidas de mitigación
+
+- Deshabilitar el inicio de sesión directo como `root` mediante SSH.
+- Configurar `PermitRootLogin no` en `sshd_config`.
+- Utilizar usuarios sin privilegios para el acceso inicial.
+- Usar contraseñas largas, únicas y aleatorias.
+- Priorizar autenticación mediante claves SSH.
+- Deshabilitar la autenticación mediante contraseña cuando sea posible.
+- Implementar Fail2Ban o una solución equivalente.
+- Limitar la cantidad de intentos de autenticación.
+- Restringir el acceso al puerto 22 mediante firewall.
+- Mantener OpenSSH actualizado.
+- Supervisar los registros de autenticación.
+
+## 11. Conclusión
+
+La resolución siguió este flujo:
+
+1. Escaneo completo de puertos.
+2. Identificación del servicio SSH.
+3. Enumeración de su versión.
+4. Investigación de posibles vulnerabilidades.
+5. Descarte de exploits no aplicables.
+6. Ataque de diccionario con Hydra.
+7. Obtención de credenciales válidas.
+8. Acceso directo como usuario `root`.
+
+El problema principal no fue únicamente la versión de OpenSSH, sino la combinación de autenticación directa como `root`, una contraseña débil y la ausencia de controles efectivos contra ataques de fuerza bruta.

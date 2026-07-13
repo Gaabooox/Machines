@@ -1,67 +1,192 @@
-# Máquina FirstHacking #
+---
+title: FirstHacking
+description: Resolución de la máquina FirstHacking de DockerLabs
+---
 
-Hoy resolveré la máquina FirstHacking de la plataforma DockerLabs.
+# FirstHacking
 
-Temas a tratar:
+`DockerLabs` `Very Easy` `Linux` `Completada`
 
-- Reconocimiento
-- Búsqueda de exploits
+Máquina enfocada en reconocimiento de servicios, enumeración FTP, búsqueda de vulnerabilidades conocidas y explotación de una versión vulnerable de vsftpd.
 
-## Paso 1 ##
+## Información de la máquina
 
-Activamos la máquina FirstHacking desde la terminal.
+| Campo | Valor |
+|---|---|
+| Plataforma | DockerLabs |
+| Dificultad | Very Easy |
+| Sistema operativo | Linux |
+| Estado | Completada |
+| Servicio principal | FTP |
+| Puerto principal | 21/TCP |
+| Acceso obtenido | Root mediante explotación del servicio |
 
-![Alt Imagen1](https://blogger.googleusercontent.com/img/a/AVvXsEig8giUfBNkhyk4aYi175z9U1UNHzpikgASb6Z4FGv5hrMJ_RX1pos223oL4Xjr9-2cuFRimxvaUNNaQ25LT25cd8YSU2XQgleTdxOXc4Il6Ay_2E-e5slEB4vWB-kdD0m-3-rTMPv18geIak4bO9dNoV4GTbOaVGyj9OGSTDOdR3TxwaK96QTKk1abG9ey=w480-h178)
+## Técnicas utilizadas
 
-## Paso 2 ##
+`Nmap` `FTP` `Searchsploit` `Análisis de exploits` `Backdoor`
 
-Realizamos un escaneo utlizando la herramienta **Nmap**
+## 1. Preparación de la máquina
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEjI3nNec6pQl-zmdaoi1HcJq0uQgr8FpvMRZqwmfzbhBkE8IkFfFPHsjp7vJ43yjHJN4Crr5KRVH76feqQ0vmBks0kO_i_PyEqNXIEm2ywrCrp94wyfPDJiTHtzd_7lZmFnqqwhCe9GnBjcyEZ5xopS3aa5aIh-9VOsllEar8Y9oOORvKoG4ujzdV5h0LgY=w506-h327)
+Se desplegó la máquina FirstHacking desde DockerLabs.
 
-- '-p- --open' = Escanea todos los puertos con el estado abierto
-- '-sS'= Es un escaneo SYN que evita que el Three-way handshake se complete
-- '--min-rate' = Envia paquetes no mas lentos que la cantidad que elijas
-- '-n' = Desactiva la resolicion DNS
-- '-Pn' = Toma todos los host como activos para evitar hacer ping a cada uno
-- '-vvv' = Muestra el proceso en pantalla mientras se va escaneando
-- 'oG' = Exporta tu escaneo en un formato grepeable para poder examinarlo mas adelante si se necesita
+<!-- IMAGEN PENDIENTE: despliegue de FirstHacking -->
 
-## Paso 3 ##
+## 2. Reconocimiento de puertos
 
-Interpretamos la información obtenida.
+Se realizó un escaneo completo de puertos TCP:
 
-Tenemos un solo puerto abierto:
+```bash
+sudo nmap -p- --open -sS --min-rate 5000 -n -Pn -vvv <IP_OBJETIVO> -oG allPorts
+```
 
-- Puerto 21: En este puerto corre el servicio ftp
+| Opción | Función |
+|---|---|
+| `-p-` | Escanea los 65 535 puertos TCP |
+| `--open` | Muestra solamente puertos abiertos |
+| `-sS` | Realiza un escaneo TCP SYN |
+| `--min-rate 5000` | Solicita una velocidad mínima de envío |
+| `-n` | Desactiva la resolución DNS |
+| `-Pn` | Trata el objetivo como activo |
+| `-vvv` | Muestra información detallada |
+| `-oG allPorts` | Guarda el resultado en formato grepeable |
 
-## Paso 4 ##
+<!-- IMAGEN PENDIENTE: escaneo inicial -->
 
-Luego de identificar el puertos abierto que corre, debemos examinar mas a detalle como la versión y que esta corriendo exactamente.
+## 3. Puerto encontrado
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEj6EKWkX2MBrHHRmMGdEzFki-VTcU_YdulGxSZG2mO87Dbo3FJC52zzD84_Xhdi6TgBTNRz4wrbyQWjeFlNbsuakNF8PDr3dKC8u_UFAzrGGcFYqY6THdXHiyyetleET8qG8duNOsKdkdCxVE4ncEYugUR2NSFqvEdwA6o9qR5nmR596S3yJas9-RF6Cd0r=w463-h204)
+El escaneo mostró un único puerto abierto:
 
-- 'p-21' = Examina exactamente ese puerto.
-- '-sCV' = Lanza scripts basicos de reconocimiento y detecta la version de este.
+| Puerto | Servicio | Estado |
+|---:|---|---|
+| 21/TCP | FTP | Abierto |
 
-## Paso 5 ##
+FTP se utiliza para transferir archivos entre sistemas mediante una conexión de red.
 
-Tenemos el servicio FTP con la version vsftpd 2.3.4, como sabemos es una versión muy antigua por lo cual optamos en buscar exploits ya elaborados para esa versión.
+## 4. Enumeración del servicio
 
-![Alt Imagen3](https://blogger.googleusercontent.com/img/a/AVvXsEhy4vW_KagQCY47JAAbzKDK4EuapSXa69DLdu_Qi45D64ZvPp3xzIYGtAWC7O2PYOXHIa7gV9V7dfqG02wrsJsparFibCH69h0WJ-l5Q-E7e-WsgnlBnAsfBx3EZMXXAyW7DjEUzUqcOs2HL8cMlquPLs5nWb77VbHGb8QiopFm7y3WGMRrl-G6eCAuh0gs=w461-h121)
+Se realizó un escaneo específico contra el puerto 21:
 
-Encontramos un exploit que te genera un backdoor, procedemos a desde el archivo .py, y leer en que consiste.
+```bash
+sudo nmap -p 21 -sCV <IP_OBJETIVO> -oN targeted
+```
 
-![Alt Imagen4](https://blogger.googleusercontent.com/img/a/AVvXsEjysistBwAZC0fF_EaxniCDGbiBkMmyYbp8VazrXiCOLapZykc_hSu5afbGqfo5qx6Ej7B_4DlQuS1iADbgqS957VwbD3Cj3cbwJwLMFgpDmxaT8qcWP-WZZoyLIQf_oAPc9qRa_Lvd55V6_mcsv_RFsU2DQa4QPPWaxlFR_BbXIFdjnRzZMNmVdFe5_Lx6=w428-h404)
+El resultado identificó:
 
-Leyendo las lineas de codigo, entendemos que esta aprovechandose de un usuario el cual lleve el simbolo ': )', estos simbolos rompen la autenticacion, permitiendonos entrar como usuarios root, cabe recalcar que leyendo el CVE de esta vulneracion ya subsanada, se concluye que es un caso muy atipico y particular.
+```text
+Servicio: FTP
+Software: vsftpd
+Versión: 2.3.4
+```
 
-## Paso 6 ##
+<!-- IMAGEN PENDIENTE: identificación de vsftpd 2.3.4 -->
 
-Procedemos a ejecutar el archivo py para tener acceso root.
+## 5. Búsqueda de vulnerabilidades
 
-![Alt Imagen5](https://blogger.googleusercontent.com/img/a/AVvXsEjjM_8JqKgQDjWjETBXOheyGeH3RkFYO_tAq3WHwc3Z0iwArFVbo9DnS7MInvhaZ8A1cHfGPpQlM6kTt0s2LleQMP32eYDYs_eIGN1iUwP6Zu-IkUv69eMbC-5U5xjYL07-54raUFEnuRQX_hPJH5PqghATMRXUE8cp1_lr95F6tlzwXKJuPRvVVPWmYuvD=w511-h118)
+Se utilizó Searchsploit para buscar exploits públicos relacionados:
 
-Como vemos, el exploit si funciona y ya contamos con acceso root de la máquina.
+```bash
+searchsploit vsftpd 2.3.4
+```
 
-Gracias por leer este WriteUp. :)
+También se puede inspeccionar la información de un resultado con:
+
+```bash
+searchsploit -x <RUTA_DEL_EXPLOIT>
+```
+
+La revisión mostró un exploit relacionado con una puerta trasera presente en una distribución comprometida de vsftpd 2.3.4.
+
+<!-- IMAGEN PENDIENTE: resultado de Searchsploit -->
+
+## 6. Análisis del exploit
+
+El comportamiento vulnerable utilizaba un nombre de usuario que contenía:
+
+```text
+:)
+```
+
+Esta secuencia activaba la puerta trasera y abría un servicio adicional desde el que podía obtenerse una shell.
+
+Antes de ejecutar código público se debe revisar:
+
+- Qué acciones realiza.
+- Qué dirección IP recibe.
+- Qué puerto utiliza.
+- Si necesita Python 2 o Python 3.
+- Si contiene instrucciones peligrosas adicionales.
+
+<!-- IMAGEN PENDIENTE: revisión del código del exploit -->
+
+## 7. Explotación
+
+El exploit seleccionado se ejecutó contra la máquina:
+
+```bash
+python3 <EXPLOIT>.py <IP_OBJETIVO>
+```
+
+El nombre y los argumentos exactos dependen del archivo obtenido mediante Searchsploit.
+
+Después de ejecutarlo correctamente se obtuvo una shell con privilegios elevados.
+
+<!-- IMAGEN PENDIENTE: ejecución del exploit -->
+
+## 8. Comprobación del acceso
+
+Se verificó el usuario actual:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+root
+```
+
+También se comprobó la identidad completa:
+
+```bash
+id
+```
+
+## 9. Vulnerabilidades encontradas
+
+### Servicio FTP vulnerable
+
+La máquina ejecutaba una distribución vulnerable de vsftpd 2.3.4.
+
+### Software desactualizado
+
+El servicio utilizaba una versión antigua y asociada con una puerta trasera conocida.
+
+### Exposición innecesaria de FTP
+
+El puerto 21 estaba disponible para cualquier equipo con acceso a la red del laboratorio.
+
+## 10. Medidas de mitigación
+
+- Retirar versiones comprometidas o desactualizadas de vsftpd.
+- Instalar paquetes únicamente desde repositorios confiables.
+- Verificar firmas y hashes de los paquetes.
+- Sustituir FTP por SFTP cuando sea posible.
+- Restringir el acceso mediante firewall.
+- Deshabilitar servicios que no sean necesarios.
+- Mantener inventariado y actualizado el software.
+- Supervisar puertos y procesos inesperados.
+
+## 11. Conclusión
+
+La resolución siguió este flujo:
+
+1. Escaneo completo de puertos.
+2. Identificación de FTP en el puerto 21.
+3. Detección de vsftpd 2.3.4.
+4. Búsqueda de exploits conocidos.
+5. Revisión del código antes de ejecutarlo.
+6. Explotación de la puerta trasera.
+7. Obtención de acceso como `root`.
+
+La lección principal fue que la versión de un servicio debe comprobarse y relacionarse con vulnerabilidades reales antes de intentar explotarlo.
