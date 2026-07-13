@@ -63,3 +63,4 @@ extra_javascript:
   - javascripts/site.js
   - stylesheets/enhancements.css
   - javascripts/enhancements.js
+  - javascripts/dynamic-sections.js

@@ -1,5 +1,20 @@
 [
   {
+    "name": "Test",
+    "slug": "test",
+    "path": "hackthebox/medium/test/",
+    "platform": "Hack The Box",
+    "difficulty": "Medium",
+    "operatingSystem": "Windows",
+    "summary": "SHH",
+    "date": "2026-07-13",
+    "year": "2026",
+    "tags": [
+      "nmap",
+      "rufus"
+    ]
+  },
+  {
     "name": "BorazuwarahCTF",
     "slug": "borazuwarahctf",
     "path": "dockerlabs/very-easy/borazuwarahctf/",

@@ -2,7 +2,7 @@
   {
     "name": "Nmap",
     "slug": "nmap",
-    "count": 6,
+    "count": 7,
     "machines": [
       {
         "name": "BorazuwarahCTF",
@@ -35,6 +35,14 @@
         "difficulty": "Very Easy",
         "operatingSystem": "Linux",
         "date": "2026-05-12"
+      },
+      {
+        "name": "Test",
+        "path": "hackthebox/medium/test/",
+        "platform": "Hack The Box",
+        "difficulty": "Medium",
+        "operatingSystem": "Windows",
+        "date": "2026-07-13"
       },
       {
         "name": "Trust",
@@ -234,6 +242,21 @@
         "difficulty": "Very Easy",
         "operatingSystem": "Linux",
         "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "rufus",
+    "slug": "rufus",
+    "count": 1,
+    "machines": [
+      {
+        "name": "Test",
+        "path": "hackthebox/medium/test/",
+        "platform": "Hack The Box",
+        "difficulty": "Medium",
+        "operatingSystem": "Windows",
+        "date": "2026-07-13"
       }
     ]
   },

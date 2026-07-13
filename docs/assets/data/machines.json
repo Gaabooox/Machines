@@ -123,5 +123,24 @@
       "Linux",
       "Escalada de privilegios"
     ]
+  },
+  {
+    "name": "Test",
+    "slug": "test",
+    "platform": "Hack The Box",
+    "platformSlug": "hackthebox",
+    "difficulty": "Medium",
+    "difficultySlug": "medium",
+    "operatingSystem": "Windows",
+    "status": "Completada",
+    "path": "hackthebox/medium/test/",
+    "summary": "SHH",
+    "access": "shh",
+    "escalation": "no se",
+    "date": "2026-07-13",
+    "tags": [
+      "nmap",
+      "rufus"
+    ]
   }
 ]

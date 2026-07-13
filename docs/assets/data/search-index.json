@@ -48,12 +48,20 @@
     "keywords": "DockerLabs Very Easy Linux SSH como camilo Ruby mediante sudo System.Object[]"
   },
   {
+    "type": "machine",
+    "title": "Test",
+    "url": "hackthebox/medium/test/",
+    "subtitle": "Hack The Box · Medium · Windows",
+    "content": "SHH",
+    "keywords": "Hack The Box Medium Windows shh no se System.Object[]"
+  },
+  {
     "type": "technique",
     "title": "Nmap",
     "url": "techniques/#nmap",
-    "subtitle": "6 máquina(s)",
-    "content": "Utilizada en: BorazuwarahCTF, BreakMySsh, FirstHacking, HedgeHog, Trust, Vacaciones",
-    "keywords": "BorazuwarahCTF BreakMySsh FirstHacking HedgeHog Trust Vacaciones"
+    "subtitle": "7 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF, BreakMySsh, FirstHacking, HedgeHog, Test, Trust, Vacaciones",
+    "keywords": "BorazuwarahCTF BreakMySsh FirstHacking HedgeHog Test Trust Vacaciones"
   },
   {
     "type": "technique",
@@ -126,6 +134,14 @@
     "subtitle": "1 máquina(s)",
     "content": "Utilizada en: FirstHacking",
     "keywords": "FirstHacking"
+  },
+  {
+    "type": "technique",
+    "title": "rufus",
+    "url": "techniques/#rufus",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: Test",
+    "keywords": "Test"
   },
   {
     "type": "technique",
