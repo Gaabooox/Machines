@@ -1,66 +1,61 @@
-site_name: Machines
-site_description: Portafolio de máquinas y writeups de ciberseguridad
+site_name: Wolf Security Writeups
+site_description: Portafolio de ciberseguridad con writeups, técnicas y laboratorios prácticos.
 site_author: Gabriel Saavedra
 site_url: https://gaabooox.github.io/Machines/
-
 repo_name: Gaabooox/Machines
 repo_url: https://github.com/Gaabooox/Machines
-
 nav:
-  - Inicio: index.md
-  - Máquinas: machines/index.md
-  - Técnicas: techniques/index.md
-  - Plataformas: platforms/index.md
-  - Progreso: timeline/index.md
-  - Sobre mí: about.md
+- Inicio: index.md
+- Máquinas: machines/index.md
+- Técnicas: techniques/index.md
+- Plataformas: platforms/index.md
+- Progreso: timeline/index.md
+- Sobre mí: about.md
+not_in_nav: 'dockerlabs/**/*.md
 
-not_in_nav: |
-  dockerlabs/**/*.md
   hackthebox/**/*.md
+
   tryhackme/**/*.md
+
   vulnhub/**/*.md
 
+  '
 theme:
   name: material
   language: es
-  favicon: assets/images/skull-mark.svg
-
+  favicon: assets/images/favicon.svg
   icon:
     logo: fontawesome/solid/skull
     repo: fontawesome/brands/github
-
   palette:
     scheme: slate
-
   features:
-    - navigation.top
-    - toc.follow
-    - search.suggest
-    - search.highlight
-    - content.code.copy
-    - content.code.annotate
-
+  - navigation.top
+  - toc.follow
+  - search.suggest
+  - search.highlight
+  - content.code.copy
+  - content.code.annotate
+  custom_dir: docs/overrides
 plugins:
-  - search
-
+- search
 markdown_extensions:
-  - attr_list
-  - md_in_html
-  - admonition
-  - pymdownx.details
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-
+- attr_list
+- md_in_html
+- admonition
+- pymdownx.details
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
 extra_css:
-  - stylesheets/final.css
-
+- stylesheets/final.css
 extra_javascript:
-  - javascripts/site.js
-  - stylesheets/enhancements.css
-  - javascripts/enhancements.js
-  - javascripts/dynamic-sections.js
+- javascripts/site.js
+- stylesheets/enhancements.css
+- javascripts/enhancements.js
+- javascripts/dynamic-sections.js
+- javascripts/analytics.js

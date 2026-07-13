@@ -440,3 +440,10 @@ Write-Host "- Máquinas: $($normalizedMachines.Count)"
 Write-Host "- Técnicas: $($techniques.Count)"
 Write-Host "- Entradas de búsqueda: $($searchEntries.Count)"
 Write-Host "- Línea temporal: $($timeline.Count)"
+
+# Actualizar estadísticas del README.
+$readmeUpdater = Join-Path $PSScriptRoot "update-readme.ps1"
+
+if (Test-Path $readmeUpdater) {
+    & $readmeUpdater
+}

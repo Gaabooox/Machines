@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gaabooox.github.io/Machines/sitemap.xml
