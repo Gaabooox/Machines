@@ -26,7 +26,7 @@ hide:
 
       <div class="hero-actions">
         <a class="portfolio-button portfolio-button-primary"
-           href="dockerlabs/very-easy/borazuwarahctf/">
+           href="machines/">
           Ver máquinas
         </a>
 
@@ -188,3 +188,5 @@ hide:
   </section>
 
 </div>
+
+

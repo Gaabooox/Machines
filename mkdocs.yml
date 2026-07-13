@@ -30,3 +30,4 @@ plugins:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/catalog.css
