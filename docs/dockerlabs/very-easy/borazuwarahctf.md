@@ -1,86 +1,179 @@
-# Máquina BorazuwarahCTF #
+---
+title: BorazuwarahCTF
+description: Resolución de la máquina BorazuwarahCTF de DockerLabs
+---
 
-Hoy resolveré la máquina BorazuwarahCTF de la plataforma DockerLabs.
+# BorazuwarahCTF
 
-Temas a tratar:
+`DockerLabs` `Very Easy` `Linux` `Completada`
 
-- Reconocimiento
-- Esteganografía
-- Fuerza bruta
-- Escalada de privilegios
+Máquina enfocada en reconocimiento, análisis de metadatos, fuerza bruta contra SSH y escalada de privilegios mediante una configuración insegura de `sudo`.
 
-## Paso 1 ##
+## Información de la máquina
 
-Activamos la máquina BorazuwarahCTF desde la terminal.
+| Campo | Valor |
+|---|---|
+| Plataforma | DockerLabs |
+| Dificultad | Very Easy |
+| Sistema operativo | Linux |
+| Estado | Completada |
+| Acceso inicial | SSH |
+| Escalada de privilegios | Configuración insegura de sudo |
 
-![Alt Imagen1](https://blogger.googleusercontent.com/img/a/AVvXsEgUHZYRO-GOBxVhu_EvGhJEkcSOf0sanMCTz_mMQZ8O9WmKWBWLud0m8BufVWQau0l1fmVkB6zBELA6Y0EDaSXKZZhnbtvnZ0uZD4Oc2BbUCEpIOOzHIhU67ZDz10K8AYiSlLAEmwQ_BVb852EEWGPLq2GX28zT6j1o_MceEIjdbf253cRUviSohGPWfXl8=w405-h338)
+## Técnicas utilizadas
 
-## Paso 2 ##
+`Nmap` `SSH` `ExifTool` `Hydra` `Esteganografía` `Fuerza bruta` `Sudo`
 
-Realizamos un escaneo utlizando la herramienta **Nmap**
+## 1. Reconocimiento
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEiRi5PnNB--1-dUdP95cPgEUfy3D48aEsGT9Iyzqkzrl1i_LX7Hqnj-V36jMQQl_n4ybtGyDWKK4EIP6CC0Zrj4MwCqSXZ0GGvh4Kldax7ABRRK40XYuFWNnVZjsZYQEIcOdrLCqhToNnDe_c9y2tIoH8WslXG5q4DrHUVsRo9RN8CdZWl1af-bFooZRo6o=w465-h324)
+El primer objetivo consiste en identificar los puertos abiertos de la máquina.
 
-- '-p- --open' = Escanea todos los puertos con el estado abierto
-- '-sS'= Es un escaneo SYN que evita que el Three-way handshake se complete
-- '--min-rate' = Envia paquetes no mas lentos que la cantidad que elijas
-- '-n' = Desactiva la resolicion DNS
-- '-Pn' = Toma todos los host como activos para evitar hacer ping a cada uno
-- '-vvv' = Muestra el proceso en pantalla mientras se va escaneando
-- 'oG' = Exporta tu escaneo en un formato grepeable para poder examinarlo mas adelante si se necesita
+```bash
+sudo nmap -p- --open -sS --min-rate 5000 -n -Pn -vvv <IP_OBJETIVO> -oG allPorts
+```
 
-## Paso 3 ##
+### Explicación del comando
 
-Interpretamos la información obtenida.
+| Opción | Función |
+|---|---|
+| `-p-` | Escanea los 65 535 puertos TCP |
+| `--open` | Muestra solamente los puertos abiertos |
+| `-sS` | Realiza un escaneo TCP SYN |
+| `--min-rate 5000` | Solicita una velocidad mínima de 5000 paquetes por segundo |
+| `-n` | Desactiva la resolución DNS |
+| `-Pn` | Trata el objetivo como activo sin realizar descubrimiento previo |
+| `-vvv` | Aumenta el nivel de detalle mostrado |
+| `-oG allPorts` | Guarda el resultado en formato grepeable |
 
-Tenemos un solo puerto abierto:
+El escaneo mostró dos puertos abiertos:
 
-- Puerto 22: En este puerto corre el servicio ssh
-- Puerto 80: En este puerto corre el servicio http
+| Puerto | Servicio |
+|---:|---|
+| 22/TCP | SSH |
+| 80/TCP | HTTP |
 
-## Paso 4 ##
+## 2. Enumeración de servicios
 
-Luego de identificar el puertos abierto que corre, debemos examinar mas a detalle como la versión y que servicio esta corriendo exactamente.
+Después del escaneo inicial, se analizaron específicamente los puertos encontrados:
 
-![Alt Imagen2](https://blogger.googleusercontent.com/img/a/AVvXsEhZUF7ySATyNmycMiTHhwI3zyuPa6qs4j-ALjL1vvao65aTwGibt9QxHjEBFpfakseZdkAjCVx1YBPDsZH4fE3wfyotdRy7b92QsIfs8lUbqqqer83oU32q--doMM-mEHxuX5B4jKRfI8JBBXtX8zhl7m1-stVSi_-dAvxng0wK4QdZsEYrV7BT6ugTg45P=w505-h398)
+```bash
+sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted
+```
 
-- 'p-22,80' = Examina exactamente ese puerto.
-- '-sCV' = Lanza scripts basicos de reconocimiento y detecta la version de este.
+La opción `-sCV` combina:
 
-## Paso 5 ##
+- Detección de versiones de servicios con `-sV`.
+- Ejecución de scripts predeterminados de Nmap con `-sC`.
 
-Tenemos el servicio SSH con la version 9.2p1 y un servicio de apache corriendo en el puerto 80 con la version 2.4.59
+Los resultados mostraron:
 
-En el caso de SSH no podemos vulnerar mediante un exploit ya conocido, por lo cual optamos en ver la pagina que esta corriendo en el puerto 80.
+- Un servidor SSH en el puerto 22.
+- Un servidor web Apache en el puerto 80.
 
-![Alt Imagen3](https://blogger.googleusercontent.com/img/a/AVvXsEiSEob3H7FQZRiFDxPaxCvNrS54VZvdb_jeiL5_31xt1jV_NFV2ANwWRgsn2bD5uud2xdzBBmQVJ3bNEiwxOLj_yGOhNur-u9tcYCxwwcxvhn6O3q3Xfgg2YRM5P8OY8-1dZSutqgvodaW84UdheDGxlLP7hfSNImjvJJVoi3sj_iGolGtYHbKtAszatRgM=w321-h308)
+## 3. Enumeración web
 
-Al visualizar esta imagen, por instinto me hace sospechar que la imagen puede venir con alguna informacián oculta, además porque la imagen es un huevo sorpresa kinder, el cual comercialmente siempre al abrir el huevo encuentras una sorpresa dentro, a esta técnica de ocultar información dentro de archivos se llama esteganografía.
+Al acceder al servicio HTTP se encontró una imagen que sugería la posible existencia de información oculta.
 
-Intentaré obtener la información oculta con la herramienta 'ExifTool' el cual muestra los metadatos
+La técnica de ocultar información dentro de archivos, imágenes o contenido multimedia se conoce como **esteganografía**.
 
-![Alt Imagen4](https://blogger.googleusercontent.com/img/a/AVvXsEj-q7WhPooByluRYFzoE2qgDmUlRKo2unEicX3pkg2NfRPIsX_XAzD-oTR4hm72QiJYaXmNspLBInbpYYRGpim4EH0XokrbYEM9j_gnzlC3uL03sKTb5mkD1ZWfu306uhh1vtqpPzuRf6IFFCdiGaAQnng8JLNI5Z15iBOg46kpFuvRR8HppuUB4q05Aa8m)
+Para revisar los metadatos de la imagen se utilizó:
 
-Como vemos en los campos de Description y Title se encuentra información del user pero el password aparece vacía.
+```bash
+exiftool imagen
+```
 
-## Paso 6 ##
+En los campos de metadatos se encontró el nombre del usuario:
 
-Ya teniendo el user 'borazuwarah' podemos intentar realizar un ataque de fuerza bruta, utilizando hydra y la wordlist de rockyou.
+```text
+borazuwarah
+```
 
-![Alt Imagen5](https://blogger.googleusercontent.com/img/a/AVvXsEj3hg2_VQ7KWs_IQX7q29oA_hl6GntePWQYitNIlqonH8s4nR__Fphz7R51chqu6WZMY3gwkyAX0d7aV5gUYarQi0jY5MuzjPaC5CEH--h8xRjUF4sMfyahrSXfe0EaH4dngW6OAdiZEXyS0PIqblInfSJNTGXto-6y3QiYmlKdTAfcFi6x6bJm7GpQdZzT=w506-h103)
+La contraseña no se encontraba directamente expuesta.
 
-Despues de ejecutar hydra con el wordlist de rockyou podemos encontrar la contraseña, la cual usaremos para obtener acceso mediante SSH.
+## 4. Acceso inicial
 
-## Paso 7 ##
+Con el usuario identificado, se realizó una prueba de fuerza bruta controlada contra el servicio SSH utilizando Hydra y la lista `rockyou.txt`.
 
-Ingresamos mediante SSH y vemos que somos el usuario borazuwarah, tendremos que buscar vulnerabilidades para la escalada de privilegio.
+```bash
+hydra -l borazuwarah -P /usr/share/wordlists/rockyou.txt ssh://<IP_OBJETIVO>
+```
 
-![Alt Imagen7](https://blogger.googleusercontent.com/img/a/AVvXsEh4D9hL1FrFy5Whl8YLB701vm3uDObf2RrUZaqliw5e0StEiqlemI9lKJA7DTz9tNKj0q4Ova99a9k_kinizoDcX10yBv3otRNcCPVmxxhXvZv7ZFO90m5mCP7DvHdMEyE41Jr37GN9w3u58QkhBMHzQl4EhPew42jKq3kwe8ocKzb5VRqb5Et0dOCjalXQ=w506-h128)
+### Explicación
 
-Observamos que podemos ejecutar comandos superusuario sin necesidad de contraseña, lo cual optaremos en abrir la bash, para seguir buscando vulnerabilidades.
+| Opción | Función |
+|---|---|
+| `-l borazuwarah` | Define un usuario específico |
+| `-P rockyou.txt` | Utiliza un archivo con posibles contraseñas |
+| `ssh://<IP_OBJETIVO>` | Define SSH como servicio objetivo |
 
-![Alt Imagen8](https://blogger.googleusercontent.com/img/a/AVvXsEj-jEzNfweYTaQPmLdyQ5s4EDLucW0F48Nx3kaS41tRoplHmIFCjHy4yO0iE2PMefLZKUEDBs8DBsQCLdfv-OfbM7xvT7YnKH8k4O3AS_zFtFsbdiaCQz_jcsZLPwfiseBKbFwkR7IPmw75leqv_xLS9u98D01VrrlwRB6Q5MYovic4wHNEhBYSuW316-vR=w547-h70)
+Hydra encontró una contraseña válida, permitiendo iniciar sesión mediante SSH:
 
-Y asi, finalmente ya somos usuarios root, con los privilegios totales.
+```bash
+ssh borazuwarah@<IP_OBJETIVO>
+```
 
-Gracias por leer este WriteUp. :)
+## 5. Escalada de privilegios
+
+Después de obtener acceso, se revisaron los permisos asignados mediante `sudo`:
+
+```bash
+sudo -l
+```
+
+La configuración permitía ejecutar comandos con privilegios elevados sin solicitar contraseña.
+
+Aprovechando esta configuración se obtuvo una shell como usuario `root`:
+
+```bash
+sudo bash
+```
+
+La identidad del usuario se comprobó con:
+
+```bash
+whoami
+```
+
+Resultado:
+
+```text
+root
+```
+
+## 6. Vulnerabilidades encontradas
+
+### Contraseña débil en SSH
+
+La contraseña del usuario podía encontrarse mediante un ataque de diccionario.
+
+### Información sensible en metadatos
+
+El nombre del usuario estaba almacenado dentro de los metadatos de una imagen publicada en el servidor web.
+
+### Permisos sudo inseguros
+
+El usuario podía ejecutar una shell privilegiada sin autenticación adicional.
+
+## 7. Medidas de mitigación
+
+- Utilizar contraseñas largas, únicas y resistentes a ataques de diccionario.
+- Deshabilitar la autenticación SSH mediante contraseña cuando sea posible.
+- Utilizar claves SSH protegidas.
+- Implementar límites de intentos y herramientas como Fail2Ban.
+- Eliminar metadatos sensibles antes de publicar archivos.
+- Aplicar el principio de mínimo privilegio en `/etc/sudoers`.
+- Evitar permisos `NOPASSWD` para shells o comandos capaces de ejecutar otros procesos.
+
+## 8. Conclusión
+
+Esta máquina permitió practicar un flujo básico de pentesting:
+
+1. Descubrimiento de puertos.
+2. Enumeración de servicios.
+3. Análisis de contenido web.
+4. Extracción de metadatos.
+5. Ataque de diccionario contra SSH.
+6. Revisión de permisos sudo.
+7. Escalada de privilegios hasta `root`.
+
+El punto más crítico fue la combinación de una contraseña débil con una configuración excesivamente permisiva de `sudo`.
