@@ -1,0 +1,25 @@
+site_name: Machines
+site_description: Portafolio de máquinas y writeups de ciberseguridad
+site_author: Gabriel Saavedra
+site_url: https://gaabooox.github.io/Machines/
+
+repo_name: Gaabooox/Machines
+repo_url: https://github.com/Gaabooox/Machines
+
+theme:
+  name: material
+  language: es
+
+  palette:
+    scheme: slate
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
