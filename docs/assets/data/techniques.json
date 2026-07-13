@@ -1,0 +1,270 @@
+[
+  {
+    "name": "Nmap",
+    "slug": "nmap",
+    "count": 6,
+    "machines": [
+      {
+        "name": "BorazuwarahCTF",
+        "path": "dockerlabs/very-easy/borazuwarahctf/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "BreakMySsh",
+        "path": "dockerlabs/very-easy/breakmyssh/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "FirstHacking",
+        "path": "dockerlabs/very-easy/firsthacking/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "HedgeHog",
+        "path": "dockerlabs/very-easy/hedgehog/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "Trust",
+        "path": "dockerlabs/very-easy/trust/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "Vacaciones",
+        "path": "dockerlabs/very-easy/vacaciones/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "SSH",
+    "slug": "ssh",
+    "count": 3,
+    "machines": [
+      {
+        "name": "BorazuwarahCTF",
+        "path": "dockerlabs/very-easy/borazuwarahctf/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "BreakMySsh",
+        "path": "dockerlabs/very-easy/breakmyssh/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "Trust",
+        "path": "dockerlabs/very-easy/trust/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Enumeración",
+    "slug": "enumeracion",
+    "count": 2,
+    "machines": [
+      {
+        "name": "FirstHacking",
+        "path": "dockerlabs/very-easy/firsthacking/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "Trust",
+        "path": "dockerlabs/very-easy/trust/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Escalada de privilegios",
+    "slug": "escalada-de-privilegios",
+    "count": 2,
+    "machines": [
+      {
+        "name": "HedgeHog",
+        "path": "dockerlabs/very-easy/hedgehog/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "Vacaciones",
+        "path": "dockerlabs/very-easy/vacaciones/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Hydra",
+    "slug": "hydra",
+    "count": 2,
+    "machines": [
+      {
+        "name": "BorazuwarahCTF",
+        "path": "dockerlabs/very-easy/borazuwarahctf/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "BreakMySsh",
+        "path": "dockerlabs/very-easy/breakmyssh/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Linux",
+    "slug": "linux",
+    "count": 2,
+    "machines": [
+      {
+        "name": "HedgeHog",
+        "path": "dockerlabs/very-easy/hedgehog/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      },
+      {
+        "name": "Vacaciones",
+        "path": "dockerlabs/very-easy/vacaciones/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Esteganografía",
+    "slug": "esteganografia",
+    "count": 1,
+    "machines": [
+      {
+        "name": "BorazuwarahCTF",
+        "path": "dockerlabs/very-easy/borazuwarahctf/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "ExifTool",
+    "slug": "exiftool",
+    "count": 1,
+    "machines": [
+      {
+        "name": "BorazuwarahCTF",
+        "path": "dockerlabs/very-easy/borazuwarahctf/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Fuerza bruta",
+    "slug": "fuerza-bruta",
+    "count": 1,
+    "machines": [
+      {
+        "name": "BreakMySsh",
+        "path": "dockerlabs/very-easy/breakmyssh/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Reconocimiento",
+    "slug": "reconocimiento",
+    "count": 1,
+    "machines": [
+      {
+        "name": "FirstHacking",
+        "path": "dockerlabs/very-easy/firsthacking/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Sudo",
+    "slug": "sudo",
+    "count": 1,
+    "machines": [
+      {
+        "name": "BorazuwarahCTF",
+        "path": "dockerlabs/very-easy/borazuwarahctf/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  },
+  {
+    "name": "Web",
+    "slug": "web",
+    "count": 1,
+    "machines": [
+      {
+        "name": "Vacaciones",
+        "path": "dockerlabs/very-easy/vacaciones/",
+        "platform": "DockerLabs",
+        "difficulty": "Very Easy",
+        "operatingSystem": "Linux",
+        "date": "2026-05-12"
+      }
+    ]
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "type": "machine",
+    "title": "BorazuwarahCTF",
+    "url": "dockerlabs/very-easy/borazuwarahctf/",
+    "subtitle": "DockerLabs · Very Easy · Linux",
+    "content": "Máquina enfocada en reconocimiento, análisis de metadatos, fuerza bruta contra SSH y escalada de privilegios mediante una configuración insegura de sudo.",
+    "keywords": "DockerLabs Very Easy Linux SSH Sudo System.Object[]"
+  },
+  {
+    "type": "machine",
+    "title": "BreakMySsh",
+    "url": "dockerlabs/very-easy/breakmyssh/",
+    "subtitle": "DockerLabs · Very Easy · Linux",
+    "content": "Máquina enfocada en reconocimiento de servicios, enumeración de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario root.",
+    "keywords": "DockerLabs Very Easy Linux SSH como root No necesaria System.Object[]"
+  },
+  {
+    "type": "machine",
+    "title": "FirstHacking",
+    "url": "dockerlabs/very-easy/firsthacking/",
+    "subtitle": "DockerLabs · Very Easy · Linux",
+    "content": "Máquina enfocada en enumeración FTP, búsqueda de vulnerabilidades conocidas y explotación de una versión vulnerable de vsftpd.",
+    "keywords": "DockerLabs Very Easy Linux Backdoor de vsftpd No necesaria System.Object[]"
+  },
+  {
+    "type": "machine",
+    "title": "HedgeHog",
+    "url": "dockerlabs/very-easy/hedgehog/",
+    "subtitle": "DockerLabs · Very Easy · Linux",
+    "content": "Máquina enfocada en enumeración web, interpretación de pistas, fuerza bruta contra SSH y escalada mediante permisos inseguros de sudo.",
+    "keywords": "DockerLabs Very Easy Linux SSH como tails tails → sonic → root System.Object[]"
+  },
+  {
+    "type": "machine",
+    "title": "Trust",
+    "url": "dockerlabs/very-easy/trust/",
+    "subtitle": "DockerLabs · Very Easy · Linux",
+    "content": "Máquina enfocada en fuzzing web, descubrimiento de usuarios, fuerza bruta contra SSH y escalada mediante Vim ejecutado con sudo.",
+    "keywords": "DockerLabs Very Easy Linux SSH como mario Vim mediante sudo System.Object[]"
+  },
+  {
+    "type": "machine",
+    "title": "Vacaciones",
+    "url": "dockerlabs/very-easy/vacaciones/",
+    "subtitle": "DockerLabs · Very Easy · Linux",
+    "content": "Máquina enfocada en inspección de HTML, fuerza bruta contra SSH, movimiento entre usuarios y escalada mediante Ruby ejecutado con sudo.",
+    "keywords": "DockerLabs Very Easy Linux SSH como camilo Ruby mediante sudo System.Object[]"
+  },
+  {
+    "type": "technique",
+    "title": "Nmap",
+    "url": "techniques/#nmap",
+    "subtitle": "6 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF, BreakMySsh, FirstHacking, HedgeHog, Trust, Vacaciones",
+    "keywords": "BorazuwarahCTF BreakMySsh FirstHacking HedgeHog Trust Vacaciones"
+  },
+  {
+    "type": "technique",
+    "title": "SSH",
+    "url": "techniques/#ssh",
+    "subtitle": "3 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF, BreakMySsh, Trust",
+    "keywords": "BorazuwarahCTF BreakMySsh Trust"
+  },
+  {
+    "type": "technique",
+    "title": "Enumeración",
+    "url": "techniques/#enumeracion",
+    "subtitle": "2 máquina(s)",
+    "content": "Utilizada en: FirstHacking, Trust",
+    "keywords": "FirstHacking Trust"
+  },
+  {
+    "type": "technique",
+    "title": "Escalada de privilegios",
+    "url": "techniques/#escalada-de-privilegios",
+    "subtitle": "2 máquina(s)",
+    "content": "Utilizada en: HedgeHog, Vacaciones",
+    "keywords": "HedgeHog Vacaciones"
+  },
+  {
+    "type": "technique",
+    "title": "Hydra",
+    "url": "techniques/#hydra",
+    "subtitle": "2 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF, BreakMySsh",
+    "keywords": "BorazuwarahCTF BreakMySsh"
+  },
+  {
+    "type": "technique",
+    "title": "Linux",
+    "url": "techniques/#linux",
+    "subtitle": "2 máquina(s)",
+    "content": "Utilizada en: HedgeHog, Vacaciones",
+    "keywords": "HedgeHog Vacaciones"
+  },
+  {
+    "type": "technique",
+    "title": "Esteganografía",
+    "url": "techniques/#esteganografia",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF",
+    "keywords": "BorazuwarahCTF"
+  },
+  {
+    "type": "technique",
+    "title": "ExifTool",
+    "url": "techniques/#exiftool",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF",
+    "keywords": "BorazuwarahCTF"
+  },
+  {
+    "type": "technique",
+    "title": "Fuerza bruta",
+    "url": "techniques/#fuerza-bruta",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: BreakMySsh",
+    "keywords": "BreakMySsh"
+  },
+  {
+    "type": "technique",
+    "title": "Reconocimiento",
+    "url": "techniques/#reconocimiento",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: FirstHacking",
+    "keywords": "FirstHacking"
+  },
+  {
+    "type": "technique",
+    "title": "Sudo",
+    "url": "techniques/#sudo",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: BorazuwarahCTF",
+    "keywords": "BorazuwarahCTF"
+  },
+  {
+    "type": "technique",
+    "title": "Web",
+    "url": "techniques/#web",
+    "subtitle": "1 máquina(s)",
+    "content": "Utilizada en: Vacaciones",
+    "keywords": "Vacaciones"
+  }
+]

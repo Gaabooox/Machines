@@ -592,3 +592,59 @@ document.addEventListener("DOMContentLoaded", () => {
   initPlatforms();
   initWriteup();
 });
+
+/* PORTFOLIO_FINAL_SECTIONS_JS_START */
+
+function initPortfolioTechniqueFilter() {
+  const input = document.querySelector("#pf-tech-search-input");
+  const grid = document.querySelector("#pf-tech-grid");
+  const visibleCounter = document.querySelector("#pf-tech-visible");
+  const emptyState = document.querySelector("#pf-tech-empty");
+
+  if (!input || !grid) {
+    return;
+  }
+
+  const cards = [...grid.querySelectorAll(".pf-tech-card")];
+
+  const normalize = (value) =>
+    String(value ?? "")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase()
+      .trim();
+
+  const render = () => {
+    const query = normalize(input.value);
+    let visible = 0;
+
+    cards.forEach((card) => {
+      const matches =
+        !query ||
+        normalize(card.dataset.search).includes(query);
+
+      card.hidden = !matches;
+
+      if (matches) {
+        visible += 1;
+      }
+    });
+
+    if (visibleCounter) {
+      visibleCounter.textContent = String(visible);
+    }
+
+    if (emptyState) {
+      emptyState.hidden = visible !== 0;
+    }
+  };
+
+  input.addEventListener("input", render);
+  render();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initPortfolioTechniqueFilter();
+});
+
+/* PORTFOLIO_FINAL_SECTIONS_JS_END */

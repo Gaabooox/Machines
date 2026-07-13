@@ -9,7 +9,9 @@ repo_url: https://github.com/Gaabooox/Machines
 nav:
   - Inicio: index.md
   - Máquinas: machines/index.md
+  - Técnicas: techniques/index.md
   - Plataformas: platforms/index.md
+  - Progreso: timeline/index.md
   - Sobre mí: about.md
 
 not_in_nav: |
@@ -59,3 +61,5 @@ extra_css:
 
 extra_javascript:
   - javascripts/site.js
+  - stylesheets/enhancements.css
+  - javascripts/enhancements.js
