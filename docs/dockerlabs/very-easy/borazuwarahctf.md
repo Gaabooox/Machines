@@ -3,22 +3,67 @@ title: BorazuwarahCTF
 description: Resolución de la máquina BorazuwarahCTF de DockerLabs
 ---
 
-# BorazuwarahCTF
+<div class="writeup-hero">
 
-`DockerLabs` `Very Easy` `Linux` `Completada`
+  <div class="writeup-hero-content">
 
-Máquina enfocada en reconocimiento, análisis de metadatos, fuerza bruta contra SSH y escalada de privilegios mediante una configuración insegura de `sudo`.
+    <h1>BorazuwarahCTF</h1>
 
-## Información de la máquina
+    <p class="writeup-hero-description">
+      Máquina enfocada en reconocimiento, análisis de metadatos,
+      fuerza bruta contra SSH y escalada de privilegios mediante
+      una configuración insegura de sudo.
+    </p>
 
-| Campo | Valor |
-|---|---|
-| Plataforma | DockerLabs |
-| Dificultad | Very Easy |
-| Sistema operativo | Linux |
-| Estado | Completada |
-| Acceso inicial | SSH |
-| Escalada de privilegios | Configuración insegura de sudo |
+    <div class="writeup-badges">
+      <span class="writeup-badge">DockerLabs</span>
+      <span class="writeup-badge writeup-badge-success">Very Easy</span>
+      <span class="writeup-badge">Linux</span>
+      <span class="writeup-badge">Completada</span>
+    </div>
+
+  </div>
+
+  <div class="writeup-summary">
+
+    <div class="writeup-summary-row">
+      <span>Plataforma</span>
+      <strong>DockerLabs</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Dificultad</span>
+      <strong>Very Easy</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Sistema</span>
+      <strong>Linux</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Acceso inicial</span>
+      <strong>SSH</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Escalada</span>
+      <strong>Sudo</strong>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="writeup-techniques">
+  <span class="writeup-technique">Nmap</span>
+  <span class="writeup-technique">SSH</span>
+  <span class="writeup-technique">ExifTool</span>
+  <span class="writeup-technique">Hydra</span>
+  <span class="writeup-technique">Esteganografía</span>
+  <span class="writeup-technique">Fuerza bruta</span>
+  <span class="writeup-technique">Sudo</span>
+</div>
 
 ## Técnicas utilizadas
 

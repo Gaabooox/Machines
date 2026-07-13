@@ -3,28 +3,66 @@ title: Trust
 description: Resolución de la máquina Trust de DockerLabs
 ---
 
-# Trust
+<div class="writeup-hero">
 
-`DockerLabs` `Very Easy` `Linux` `Completada`
+  <div class="writeup-hero-content">
 
-Máquina enfocada en fuzzing de rutas web, descubrimiento de usuarios, fuerza bruta contra SSH y escalada de privilegios mediante Vim ejecutado con sudo.
+    <h1>Trust</h1>
 
-## Información de la máquina
+    <p class="writeup-hero-description">
+      Máquina enfocada en fuzzing de rutas web, descubrimiento de usuarios, fuerza bruta contra SSH y escalada de privilegios mediante Vim ejecutado con sudo.
+    </p>
 
-| Campo | Valor |
-|---|---|
-| Plataforma | DockerLabs |
-| Dificultad | Very Easy |
-| Sistema operativo | Linux |
-| Estado | Completada |
-| Puertos principales | 22 y 80 |
-| Acceso inicial | SSH como mario |
-| Escalada de privilegios | Vim mediante sudo |
-| Acceso final | Root |
+    <div class="writeup-badges">
+      <span class="writeup-badge">DockerLabs</span>
+      <span class="writeup-badge writeup-badge-success">Very Easy</span>
+      <span class="writeup-badge">Linux</span>
+      <span class="writeup-badge">Completada</span>
+    </div>
 
-## Técnicas utilizadas
+  </div>
 
-`Nmap` `Gobuster` `Fuzzing` `HTTP` `SSH` `Hydra` `Vim` `Sudo`
+  <div class="writeup-summary">
+
+    <div class="writeup-summary-row">
+      <span>Plataforma</span>
+      <strong>DockerLabs</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Dificultad</span>
+      <strong>Very Easy</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Sistema</span>
+      <strong>Linux</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Acceso inicial</span>
+      <strong>SSH como mario</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Escalada</span>
+      <strong>Vim mediante sudo</strong>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="writeup-techniques">
+  <span class="writeup-technique">Nmap</span>
+  <span class="writeup-technique">Gobuster</span>
+  <span class="writeup-technique">Fuzzing</span>
+  <span class="writeup-technique">HTTP</span>
+  <span class="writeup-technique">SSH</span>
+  <span class="writeup-technique">Hydra</span>
+  <span class="writeup-technique">Vim</span>
+  <span class="writeup-technique">Sudo</span>
+</div>
 
 ## 1. Preparación de la máquina
 
@@ -244,3 +282,5 @@ La resolución siguió este flujo:
 10. Obtención de una shell como `root`.
 
 La vulnerabilidad crítica fue permitir que un usuario sin privilegios ejecutara Vim como superusuario.
+
+

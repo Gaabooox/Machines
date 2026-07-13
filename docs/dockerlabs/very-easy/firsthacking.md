@@ -3,27 +3,63 @@ title: FirstHacking
 description: Resolución de la máquina FirstHacking de DockerLabs
 ---
 
-# FirstHacking
+<div class="writeup-hero">
 
-`DockerLabs` `Very Easy` `Linux` `Completada`
+  <div class="writeup-hero-content">
 
-Máquina enfocada en reconocimiento de servicios, enumeración FTP, búsqueda de vulnerabilidades conocidas y explotación de una versión vulnerable de vsftpd.
+    <h1>FirstHacking</h1>
 
-## Información de la máquina
+    <p class="writeup-hero-description">
+      Máquina enfocada en reconocimiento de servicios, enumeración FTP, búsqueda de vulnerabilidades conocidas y explotación de una versión vulnerable de vsftpd.
+    </p>
 
-| Campo | Valor |
-|---|---|
-| Plataforma | DockerLabs |
-| Dificultad | Very Easy |
-| Sistema operativo | Linux |
-| Estado | Completada |
-| Servicio principal | FTP |
-| Puerto principal | 21/TCP |
-| Acceso obtenido | Root mediante explotación del servicio |
+    <div class="writeup-badges">
+      <span class="writeup-badge">DockerLabs</span>
+      <span class="writeup-badge writeup-badge-success">Very Easy</span>
+      <span class="writeup-badge">Linux</span>
+      <span class="writeup-badge">Completada</span>
+    </div>
 
-## Técnicas utilizadas
+  </div>
 
-`Nmap` `FTP` `Searchsploit` `Análisis de exploits` `Backdoor`
+  <div class="writeup-summary">
+
+    <div class="writeup-summary-row">
+      <span>Plataforma</span>
+      <strong>DockerLabs</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Dificultad</span>
+      <strong>Very Easy</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Sistema</span>
+      <strong>Linux</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Acceso inicial</span>
+      <strong>Backdoor de vsftpd</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Escalada</span>
+      <strong>No necesaria</strong>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="writeup-techniques">
+  <span class="writeup-technique">Nmap</span>
+  <span class="writeup-technique">FTP</span>
+  <span class="writeup-technique">Searchsploit</span>
+  <span class="writeup-technique">Análisis de exploits</span>
+  <span class="writeup-technique">Backdoor</span>
+</div>
 
 ## 1. Preparación de la máquina
 
@@ -190,3 +226,5 @@ La resolución siguió este flujo:
 7. Obtención de acceso como `root`.
 
 La lección principal fue que la versión de un servicio debe comprobarse y relacionarse con vulnerabilidades reales antes de intentar explotarlo.
+
+

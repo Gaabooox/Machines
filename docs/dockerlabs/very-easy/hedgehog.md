@@ -3,28 +3,66 @@ title: HedgeHog
 description: Resolución de la máquina HedgeHog de DockerLabs
 ---
 
-# HedgeHog
+<div class="writeup-hero">
 
-`DockerLabs` `Very Easy` `Linux` `Completada`
+  <div class="writeup-hero-content">
 
-Máquina enfocada en enumeración web, interpretación de pistas, fuerza bruta contra SSH y escalada de privilegios mediante permisos inseguros de sudo entre usuarios.
+    <h1>HedgeHog</h1>
 
-## Información de la máquina
+    <p class="writeup-hero-description">
+      Máquina enfocada en enumeración web, interpretación de pistas, fuerza bruta contra SSH y escalada de privilegios mediante permisos inseguros de sudo.
+    </p>
 
-| Campo | Valor |
-|---|---|
-| Plataforma | DockerLabs |
-| Dificultad | Very Easy |
-| Sistema operativo | Linux |
-| Estado | Completada |
-| Puertos principales | 22 y 80 |
-| Acceso inicial | SSH como tails |
-| Escalada intermedia | Usuario sonic |
-| Acceso final | Root |
+    <div class="writeup-badges">
+      <span class="writeup-badge">DockerLabs</span>
+      <span class="writeup-badge writeup-badge-success">Very Easy</span>
+      <span class="writeup-badge">Linux</span>
+      <span class="writeup-badge">Completada</span>
+    </div>
 
-## Técnicas utilizadas
+  </div>
 
-`Nmap` `HTTP` `SSH` `Hydra` `Gobuster` `tac` `sed` `Sudo`
+  <div class="writeup-summary">
+
+    <div class="writeup-summary-row">
+      <span>Plataforma</span>
+      <strong>DockerLabs</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Dificultad</span>
+      <strong>Very Easy</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Sistema</span>
+      <strong>Linux</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Acceso inicial</span>
+      <strong>SSH como tails</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Escalada</span>
+      <strong>tails → sonic → root</strong>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="writeup-techniques">
+  <span class="writeup-technique">Nmap</span>
+  <span class="writeup-technique">HTTP</span>
+  <span class="writeup-technique">SSH</span>
+  <span class="writeup-technique">Hydra</span>
+  <span class="writeup-technique">Gobuster</span>
+  <span class="writeup-technique">tac</span>
+  <span class="writeup-technique">sed</span>
+  <span class="writeup-technique">Sudo</span>
+</div>
 
 ## 1. Preparación de la máquina
 
@@ -246,3 +284,5 @@ La resolución combinó:
 8. Escalada final hasta `root`.
 
 La debilidad principal fue la combinación de credenciales débiles y una cadena de permisos sudo excesivos.
+
+

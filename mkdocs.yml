@@ -35,6 +35,7 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
+    - toc.follow
 
 plugins:
   - search
@@ -43,6 +44,7 @@ extra_css:
   - stylesheets/extra.css
   - stylesheets/catalog.css
   - stylesheets/about.css
+  - stylesheets/writeup.css
 
 extra_javascript:
   - javascripts/machines.js

@@ -3,28 +3,64 @@ title: BreakMySsh
 description: Resolución de la máquina BreakMySsh de DockerLabs
 ---
 
-# BreakMySsh
+<div class="writeup-hero">
 
-`DockerLabs` `Very Easy` `Linux` `Completada`
+  <div class="writeup-hero-content">
 
-Máquina enfocada en reconocimiento de servicios, enumeración de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario `root`.
+    <h1>BreakMySsh</h1>
 
-## Información de la máquina
+    <p class="writeup-hero-description">
+      Máquina enfocada en reconocimiento de servicios, enumeración de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario root.
+    </p>
 
-| Campo | Valor |
-|---|---|
-| Plataforma | DockerLabs |
-| Dificultad | Very Easy |
-| Sistema operativo | Linux |
-| Estado | Completada |
-| Servicio principal | SSH |
-| Acceso inicial | Fuerza bruta con Hydra |
-| Usuario obtenido | root |
-| Escalada de privilegios | No fue necesaria |
+    <div class="writeup-badges">
+      <span class="writeup-badge">DockerLabs</span>
+      <span class="writeup-badge writeup-badge-success">Very Easy</span>
+      <span class="writeup-badge">Linux</span>
+      <span class="writeup-badge">Completada</span>
+    </div>
 
-## Técnicas utilizadas
+  </div>
 
-`Nmap` `SSH` `Hydra` `Fuerza bruta` `Diccionarios` `Enumeración`
+  <div class="writeup-summary">
+
+    <div class="writeup-summary-row">
+      <span>Plataforma</span>
+      <strong>DockerLabs</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Dificultad</span>
+      <strong>Very Easy</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Sistema</span>
+      <strong>Linux</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Acceso inicial</span>
+      <strong>SSH como root</strong>
+    </div>
+
+    <div class="writeup-summary-row">
+      <span>Escalada</span>
+      <strong>No necesaria</strong>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="writeup-techniques">
+  <span class="writeup-technique">Nmap</span>
+  <span class="writeup-technique">SSH</span>
+  <span class="writeup-technique">Hydra</span>
+  <span class="writeup-technique">Fuerza bruta</span>
+  <span class="writeup-technique">Diccionarios</span>
+  <span class="writeup-technique">Enumeración</span>
+</div>
 
 ## 1. Preparación de la máquina
 
@@ -228,3 +264,4 @@ La resolución siguió este flujo:
 8. Acceso directo como usuario `root`.
 
 El problema principal no fue únicamente la versión de OpenSSH, sino la combinación de autenticación directa como `root`, una contraseña débil y la ausencia de controles efectivos contra ataques de fuerza bruta.
+
