@@ -245,6 +245,24 @@ if ($operatingSystem.Slug -eq "custom") {
     }
 }
 
+Write-Host ""
+$tagsInput = Read-Host "Etiquetas separadas por comas (ejemplo: Nmap, SSH, Hydra)"
+
+if ([string]::IsNullOrWhiteSpace($tagsInput)) {
+    $tags = @()
+}
+else {
+    $tags = @(
+        $tagsInput -split "," |
+        ForEach-Object {
+            $_.Trim()
+        } |
+        Where-Object {
+            -not [string]::IsNullOrWhiteSpace($_)
+        }
+    )
+}
+
 
 $machineSlug = Convert-ToSlug $machineName
 
@@ -314,7 +332,34 @@ Set-Content `
     -Path $destinationFile `
     -Value $content `
     -Encoding utf8
+$catalogScript = Join-Path `
+    $PSScriptRoot `
+    "registrar-en-catalogo.ps1"
 
+
+if (-not (Test-Path $catalogScript)) {
+    Write-Host ""
+    Write-Host "Error: no se encontró el registrador del catálogo:"
+    Write-Host $catalogScript
+
+    Remove-Item $destinationFile -Force
+    exit 1
+}
+
+
+$catalogParameters = @{
+    Name            = $machineName
+    Slug            = $machineSlug
+    Platform        = $platform.Name
+    PlatformSlug    = $platform.Slug
+    Difficulty      = $difficulty.Name
+    DifficultySlug  = $difficulty.Slug
+    OperatingSystem = $operatingSystem.Name
+    Tags            = $tags
+}
+
+
+& $catalogScript @catalogParameters
 
 Write-Host ""
 Write-Host "====================================="

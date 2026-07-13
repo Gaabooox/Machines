@@ -34,3 +34,4 @@ extra_css:
 
 extra_javascript:
   - javascripts/machines.js
+  - javascripts/home.js

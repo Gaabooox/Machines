@@ -75,18 +75,18 @@ hide:
   <section class="stats-grid">
 
     <article class="stat-card">
-      <span class="stat-number">6</span>
-      <span class="stat-label">Máquinas resueltas</span>
+      <span class="stat-number" id="home-machines-count">0</span>
+	<span class="stat-label">Máquinas resueltas</span>
     </article>
 
     <article class="stat-card">
-      <span class="stat-number">1</span>
-      <span class="stat-label">Plataforma</span>
+      <span class="stat-number" id="home-platforms-count">0</span>
+<span class="stat-label">Plataformas</span>
     </article>
 
     <article class="stat-card">
-      <span class="stat-number">6</span>
-      <span class="stat-label">Writeups publicados</span>
+      <span class="stat-number" id="home-writeups-count">0</span>
+<span class="stat-label">Writeups publicados</span>
     </article>
 
     <article class="stat-card">
