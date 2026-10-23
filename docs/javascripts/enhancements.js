@@ -42,46 +42,6 @@ function uiNormalize(value) {
     .trim();
 }
 
-function setupNavigation() {
-  const navigation = document.querySelector(".site-nav");
-
-  if (!navigation) {
-    return;
-  }
-
-  const currentPath = window.location.pathname.toLowerCase();
-
-  const items = [
-    ["Inicio", ""],
-    ["Máquinas", "machines/"],
-    ["Técnicas", "techniques/"],
-    ["Plataformas", "platforms/"],
-    ["Progreso", "timeline/"],
-    ["Sobre mí", "about/"]
-  ];
-
-  navigation.innerHTML = items
-    .map(([label, path]) => {
-      const target = new URL(path, UI_BASE_URL);
-      const targetPath = target.pathname.toLowerCase();
-
-      const active =
-        path === ""
-          ? currentPath === targetPath
-          : currentPath.startsWith(targetPath);
-
-      return `
-        <a
-          class="${active ? "is-active" : ""}"
-          href="${target.href}"
-        >
-          ${uiEscape(label)}
-        </a>
-      `;
-    })
-    .join("");
-}
-
 function getStoredTheme() {
   const saved = localStorage.getItem("machines-theme");
 
@@ -114,9 +74,9 @@ function applyTheme(theme) {
 }
 
 function setupThemeToggle() {
-  const oldButton = document.querySelector(".contrast-button");
+  const actions = document.querySelector(".site-header-actions");
 
-  if (!oldButton) {
+  if (!actions) {
     applyTheme(getStoredTheme());
     return;
   }
@@ -126,7 +86,7 @@ function setupThemeToggle() {
   button.className =
     "site-icon-button portfolio-theme-toggle";
 
-  oldButton.replaceWith(button);
+  actions.append(button);
   applyTheme(getStoredTheme());
 
   button.addEventListener("click", () => {
@@ -413,8 +373,6 @@ async function setupGlobalSearch() {
     return;
   }
 
-  const oldSearch = actions.querySelector('label[for="__search"]');
-
   const button = document.createElement("button");
   button.type = "button";
   button.className =
@@ -426,11 +384,7 @@ async function setupGlobalSearch() {
   );
   button.title = "Búsqueda global (Ctrl+K)";
 
-  if (oldSearch) {
-    oldSearch.replaceWith(button);
-  } else if (
-    !actions.querySelector(".portfolio-global-search-button")
-  ) {
+  if (!actions.querySelector(".portfolio-global-search-button")) {
     actions.prepend(button);
   }
 
@@ -508,222 +462,8 @@ async function setupGlobalSearch() {
   });
 }
 
-function createTechniqueCard(technique) {
-  const links = technique.machines
-    .map((machine) => `
-      <a class="technique-machine-link" href="${uiUrl(machine.path)}">
-        <span>${uiEscape(machine.name)}</span>
-
-        <small>
-          ${uiEscape(machine.difficulty)}
-          ·
-          ${uiEscape(machine.operatingSystem)}
-        </small>
-      </a>
-    `)
-    .join("");
-
-  const searchValue = uiNormalize(
-    `${technique.name} ${technique.machines
-      .map((machine) => machine.name)
-      .join(" ")}`
-  );
-
-  return `
-    <article
-      class="technique-card"
-      id="${uiEscape(technique.slug)}"
-      data-search="${uiEscape(searchValue)}"
-    >
-      <header class="technique-card-header">
-        <span class="technique-card-symbol">#</span>
-
-        <div>
-          <h2>${uiEscape(technique.name)}</h2>
-          <p>${technique.count} máquina(s)</p>
-        </div>
-      </header>
-
-      <div class="technique-machine-list">
-        ${links}
-      </div>
-    </article>
-  `;
-}
-
-async function setupTechniques() {
-  const grid = document.querySelector("#techniques-grid");
-
-  if (!grid) {
-    return;
-  }
-
-  const search = document.querySelector("#technique-search");
-
-  try {
-    const techniques = await uiLoadJson("techniques.json");
-
-    document.querySelector("#techniques-total").textContent =
-      techniques.length;
-
-    document.querySelector("#technique-links-total").textContent =
-      techniques.reduce(
-        (total, technique) => total + technique.count,
-        0
-      );
-
-    grid.innerHTML = techniques
-      .map(createTechniqueCard)
-      .join("");
-
-    const cards = [...grid.querySelectorAll(".technique-card")];
-
-    search?.addEventListener("input", () => {
-      const query = uiNormalize(search.value);
-
-      cards.forEach((card) => {
-        card.hidden =
-          Boolean(query) &&
-          !card.dataset.search.includes(query);
-      });
-    });
-
-    if (window.location.hash) {
-      window.setTimeout(() => {
-        document
-          .querySelector(window.location.hash)
-          ?.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-      }, 80);
-    }
-  } catch (error) {
-    console.error(error);
-    grid.innerHTML = `
-      <div class="empty-state">
-        No se pudieron cargar las técnicas.
-      </div>
-    `;
-  }
-}
-
-function formatDate(value) {
-  if (!value) {
-    return "Fecha no disponible";
-  }
-
-  const date = new Date(`${value}T00:00:00`);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("es-PE", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  }).format(date);
-}
-
-function createTimelineEntry(machine) {
-  const tags = (machine.tags || [])
-    .slice(0, 5)
-    .map((tag) => `<span>${uiEscape(tag)}</span>`)
-    .join("");
-
-  return `
-    <article class="timeline-entry">
-      <div class="timeline-dot"></div>
-
-      <div class="timeline-card">
-        <time datetime="${uiEscape(machine.date)}">
-          ${uiEscape(formatDate(machine.date))}
-        </time>
-
-        <div class="timeline-card-heading">
-          <div>
-            <a href="${uiUrl(machine.path)}">
-              <h3>${uiEscape(machine.name)}</h3>
-            </a>
-
-            <p>
-              ${uiEscape(machine.platform)}
-              ·
-              ${uiEscape(machine.difficulty)}
-              ·
-              ${uiEscape(machine.operatingSystem)}
-            </p>
-          </div>
-
-          <a class="timeline-open-link" href="${uiUrl(machine.path)}">
-            Abrir
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-
-        <p class="timeline-description">
-          ${uiEscape(machine.summary)}
-        </p>
-
-        <div class="timeline-tags">
-          ${tags}
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-async function setupTimeline() {
-  const container = document.querySelector("#timeline-container");
-
-  if (!container) {
-    return;
-  }
-
-  try {
-    const timeline = await uiLoadJson("timeline.json");
-    const years = [...new Set(timeline.map((item) => item.year))];
-
-    document.querySelector("#timeline-machines-total").textContent =
-      timeline.length;
-
-    document.querySelector("#timeline-years-total").textContent =
-      years.length;
-
-    container.innerHTML = years
-      .map((year) => {
-        const entries = timeline
-          .filter((machine) => machine.year === year)
-          .map(createTimelineEntry)
-          .join("");
-
-        return `
-          <section class="timeline-year">
-            <h2>${uiEscape(year)}</h2>
-
-            <div class="timeline-list">
-              ${entries}
-            </div>
-          </section>
-        `;
-      })
-      .join("");
-  } catch (error) {
-    console.error(error);
-    container.innerHTML = `
-      <div class="empty-state">
-        No se pudo cargar la línea temporal.
-      </div>
-    `;
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  setupNavigation();
   setupThemeToggle();
   setupGlobalSearch();
   observeContent();
-  setupTechniques();
-  setupTimeline();
 });

@@ -75,39 +75,40 @@ Machines/
 
 ## Ejecutar localmente
 
-```powershell
+```bash
 git clone https://github.com/Gaabooox/Machines.git
 cd Machines
 
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+python3 -m venv .venv
+source .venv/bin/activate
 
 python -m pip install --upgrade pip
-pip install mkdocs-material
+pip install -r requirements.txt
 
 mkdocs serve
 ```
 
 El sitio quedará disponible en la dirección mostrada por MkDocs.
 
+Los scripts de `scripts/` usan PowerShell 7 (`pwsh`), disponible en Linux, macOS y Windows.
+
 ## Agregar una máquina
 
-```powershell
-.\.venv\Scripts\Activate.ps1
-.\scripts\nueva-maquina.ps1
+```bash
+pwsh ./scripts/nueva-maquina.ps1
 ```
 
 El generador crea el writeup y actualiza automáticamente los datos utilizados por el catálogo, las técnicas, las plataformas, el progreso, la búsqueda y las estadísticas del README.
 
 ## Actualizar datos manualmente
 
-```powershell
-.\scripts\rebuild-site-data.ps1
+```bash
+pwsh ./scripts/rebuild-site-data.ps1
 ```
 
 ## Compilar
 
-```powershell
+```bash
 mkdocs build --strict
 ```
 

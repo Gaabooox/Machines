@@ -32,12 +32,6 @@ function escapeHtml(value) {
 
 function svgIcon(name) {
   const icons = {
-    search: `
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    `,
     github: `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 .7a11.6 11.6 0 0 0-3.7 22.6c.6.1.8-.3.8-.6v-2.3c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.4 3.6 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C16.6 4.5 17.6 4.8 17.6 4.8c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.2.9 2.3v3.3c0 .3.2.7.8.6A11.6 11.6 0 0 0 12 .7Z"/>
@@ -47,12 +41,6 @@ function svgIcon(name) {
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 7h16M4 12h16M4 17h16"
           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    `,
-    contrast: `
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="8"/>
-        <path d="M12 4v16"/>
       </svg>
     `,
     machines: `
@@ -132,15 +120,6 @@ function initHeader() {
       </nav>
 
       <div class="site-header-actions">
-        <label
-          class="site-icon-button"
-          for="__search"
-          aria-label="Buscar en el sitio"
-          title="Buscar"
-        >
-          ${svgIcon("search")}
-        </label>
-
         <a
           class="site-icon-button github-header-link"
           href="https://github.com/Gaabooox/Machines"
@@ -151,15 +130,6 @@ function initHeader() {
         >
           ${svgIcon("github")}
         </a>
-
-        <button
-          class="site-icon-button contrast-button"
-          type="button"
-          aria-label="Alternar contraste"
-          title="Alternar contraste"
-        >
-          ${svgIcon("contrast")}
-        </button>
 
         <button
           class="mobile-menu-button"
@@ -176,15 +146,10 @@ function initHeader() {
 
   const navigation = headerInner.querySelector("#site-nav");
   const menuButton = headerInner.querySelector(".mobile-menu-button");
-  const contrastButton = headerInner.querySelector(".contrast-button");
 
   menuButton?.addEventListener("click", () => {
     const isOpen = navigation.classList.toggle("is-open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  contrastButton?.addEventListener("click", () => {
-    document.body.classList.toggle("high-contrast");
   });
 
   navigation?.addEventListener("click", () => {
@@ -390,66 +355,6 @@ async function initMachinesCatalog() {
   }
 }
 
-async function initPlatforms() {
-  const grid = document.querySelector("#platform-grid");
-
-  if (!grid) {
-    return;
-  }
-
-  try {
-    const machines = await loadMachines();
-
-    const platformMap = new Map();
-
-    machines.forEach((machine) => {
-      const key = machine.platformSlug || machine.platform;
-
-      if (!platformMap.has(key)) {
-        platformMap.set(key, {
-          name: machine.platform,
-          count: 0
-        });
-      }
-
-      platformMap.get(key).count += 1;
-    });
-
-    const plannedPlatforms = [
-      { key: "dockerlabs", name: "DockerLabs" },
-      { key: "hackthebox", name: "Hack The Box" },
-      { key: "tryhackme", name: "TryHackMe" }
-    ];
-
-    grid.innerHTML = plannedPlatforms
-      .map((platform) => {
-        const data = platformMap.get(platform.key);
-        const count = data?.count ?? 0;
-        const enabled = count > 0;
-
-        return `
-          <a
-            class="platform-card ${enabled ? "" : "is-disabled"}"
-            href="${enabled ? pagePath(`machines/?platform=${platform.key}`) : "#"}"
-            ${enabled ? "" : 'aria-disabled="true"'}
-          >
-            <strong>${count}</strong>
-            <h2>${escapeHtml(platform.name)}</h2>
-            <p>
-              ${enabled
-                ? `${count} writeup${count === 1 ? "" : "s"} publicado${count === 1 ? "" : "s"}.`
-                : "Se añadirá contenido próximamente."}
-            </p>
-          </a>
-        `;
-      })
-      .join("");
-  } catch (error) {
-    console.error(error);
-    grid.innerHTML = `<div class="empty-state">No se pudieron cargar las plataformas.</div>`;
-  }
-}
-
 function ensureHeadingIds(headings) {
   headings.forEach((heading, index) => {
     if (!heading.id) {
@@ -591,7 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
   fillStatIcons();
   initHome();
   initMachinesCatalog();
-  initPlatforms();
   initWriteup();
 });
 

@@ -32,13 +32,10 @@ theme:
   features:
   - navigation.top
   - toc.follow
-  - search.suggest
-  - search.highlight
   - content.code.copy
   - content.code.annotate
   custom_dir: docs/overrides
-plugins:
-- search
+plugins: []
 markdown_extensions:
 - attr_list
 - md_in_html
