@@ -36,9 +36,9 @@ El sitio genera automáticamente:
 <!-- PORTFOLIO_STATS_START -->
 | Métrica | Total |
 |---|---:|
-| Máquinas | 7 |
-| Plataformas | 2 |
-| Técnicas | 13 |
+| Máquinas | 6 |
+| Plataformas | 1 |
+| Técnicas | 12 |
 <!-- PORTFOLIO_STATS_END -->
 
 ## Tecnologías

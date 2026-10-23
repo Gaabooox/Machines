@@ -96,7 +96,9 @@ function initHeader() {
   const navItems = [
     { label: "Inicio", path: "" },
     { label: "Máquinas", path: "machines/" },
+    { label: "Técnicas", path: "techniques/" },
     { label: "Plataformas", path: "platforms/" },
+    { label: "Progreso", path: "timeline/" },
     { label: "Sobre mí", path: "about/" }
   ];
 
