@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import json
-import os
 import re
 import subprocess
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 from collections import OrderedDict
@@ -16,12 +16,11 @@ def write_utf8(path, content):
     path.write_text(content, encoding='utf-8')
 
 def to_slug(text):
-    if not text:
-        return ""
-    # simple normalization
-    text = text.lower()
-    text = re.sub(r'[^a-z0-9]+', '-', text)
-    return text.strip('-')
+    value = unicodedata.normalize('NFD', str(text or ''))
+    value = ''.join(char for char in value if not unicodedata.combining(char))
+    value = value.lower()
+    value = re.sub(r'[^a-z0-9]+', '-', value)
+    return value.strip('-')
 
 def get_machine_date(repo_root, rel_writeup, abs_writeup, existing_date):
     if existing_date and existing_date.strip():
@@ -139,7 +138,8 @@ def main():
             'year': machine['date'][:4] if re.match(r'^\d{4}', machine['date']) else 'Sin fecha',
             'tags': machine['tags']
         })
-    timeline.sort(key=lambda x: (parse_date(x['date']), x['name']), reverse=True)
+    timeline.sort(key=lambda x: x['name'])
+    timeline.sort(key=lambda x: parse_date(x['date']), reverse=True)
     
     timeline_path = REPO_ROOT / 'docs' / 'assets' / 'data' / 'timeline.json'
     write_utf8(timeline_path, json.dumps(timeline, ensure_ascii=False, indent=2))
@@ -244,7 +244,7 @@ def main():
     
     updater = SCRIPT_DIR / 'update-readme.sh'
     if updater.exists():
-        os.system(f'bash "{updater}"')
+        subprocess.run(['bash', str(updater)], check=True)
 
 if __name__ == '__main__':
     main()
