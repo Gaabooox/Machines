@@ -38,8 +38,8 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Regenerar datos del portafolio
-        shell: pwsh
-        run: ./scripts/rebuild-site-data.ps1
+        shell: bash
+        run: python3 ./scripts/rebuild_site_data.py
       - name: Construir página
         run: mkdocs build --strict
 

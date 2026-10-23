@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+
+{% block htmltitle %}
+  <title>Página no encontrada | {{ config.site_name }}</title>
+{% endblock %}
+
+{% block site_nav %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+  <div class="portfolio-404">
+
+    <div class="portfolio-404-terminal">
+      <div class="portfolio-404-terminal-bar">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="portfolio-404-terminal-body">
+        <p><strong>wolf@machines</strong>:<span>~</span>$ locate page</p>
+        <p class="portfolio-404-error">error: target not found</p>
+        <p><strong>HTTP 404</strong> — La ruta solicitada no existe.</p>
+      </div>
+    </div>
+
+    <h1>Página no encontrada</h1>
+
+    <p>
+      El contenido pudo cambiar de ubicación o la dirección ingresada
+      no es correcta.
+    </p>
+
+    <div class="portfolio-404-actions">
+      <a href="/Machines/">Volver al inicio</a>
+      <a href="/Machines/machines/">Explorar máquinas</a>
+    </div>
+
+  </div>
+{% endblock %}

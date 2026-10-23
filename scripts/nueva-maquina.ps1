@@ -237,7 +237,6 @@ Write-Host "Archivo:  $destinationFile"
 Write-Host "Imágenes: $imagesDirectory"
 Write-Host ""
 
-
 $rebuildDataScript = Join-Path `
     $PSScriptRoot `
     "rebuild-site-data.ps1"
@@ -246,4 +245,5 @@ if (Test-Path $rebuildDataScript) {
     & $rebuildDataScript
 }
 
-notepad $destinationFile
+Write-Host "Edita el writeup cuando quieras:"
+Write-Host $destinationFile

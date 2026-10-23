@@ -2,7 +2,7 @@
   {
     "name": "Nmap",
     "slug": "nmap",
-    "count": 7,
+    "count": 6,
     "machines": [
       {
         "name": "BorazuwarahCTF",
@@ -35,14 +35,6 @@
         "difficulty": "Very Easy",
         "operatingSystem": "Linux",
         "date": "2026-05-12"
-      },
-      {
-        "name": "Test",
-        "path": "hackthebox/medium/test/",
-        "platform": "Hack The Box",
-        "difficulty": "Medium",
-        "operatingSystem": "Windows",
-        "date": "2026-07-13"
       },
       {
         "name": "Trust",
@@ -95,7 +87,7 @@
   },
   {
     "name": "Enumeración",
-    "slug": "enumeracion",
+    "slug": "enumeraci-n",
     "count": 2,
     "machines": [
       {
@@ -187,7 +179,7 @@
   },
   {
     "name": "Esteganografía",
-    "slug": "esteganografia",
+    "slug": "esteganograf-a",
     "count": 1,
     "machines": [
       {
@@ -242,21 +234,6 @@
         "difficulty": "Very Easy",
         "operatingSystem": "Linux",
         "date": "2026-05-12"
-      }
-    ]
-  },
-  {
-    "name": "rufus",
-    "slug": "rufus",
-    "count": 1,
-    "machines": [
-      {
-        "name": "Test",
-        "path": "hackthebox/medium/test/",
-        "platform": "Hack The Box",
-        "difficulty": "Medium",
-        "operatingSystem": "Windows",
-        "date": "2026-07-13"
       }
     ]
   },

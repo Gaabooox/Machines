@@ -346,14 +346,14 @@ foreach ($machine in $normalizedMachines) {
             continue
         }
 
-        if (-not $insideCode -and $line -match "^```([A-Za-z0-9_-]*)\s*$") {
+        if (-not $insideCode -and $line -match '^```([A-Za-z0-9_-]*)\s*$') {
             $insideCode = $true
             $codeLanguage = $Matches[1].ToLowerInvariant()
             $codeLines.Clear()
             continue
         }
 
-        if ($insideCode -and $line -match "^```\s*$") {
+        if ($insideCode -and $line -match '^```\s*$') {
             $insideCode = $false
 
             $allowedLanguages = @(
