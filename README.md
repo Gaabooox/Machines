@@ -90,12 +90,12 @@ mkdocs serve
 
 El sitio quedará disponible en la dirección mostrada por MkDocs.
 
-Los scripts de `scripts/` usan PowerShell 7 (`pwsh`), disponible en Linux, macOS y Windows.
+Los scripts de `scripts/` son bash/Python (compatibles con Linux, macOS y Windows con WSL/Git Bash). Para editar writeups puedes usar tu editor favorito.
 
 ## Agregar una máquina
 
 ```bash
-pwsh ./scripts/nueva-maquina.ps1
+bash ./scripts/nueva-maquina.sh
 ```
 
 El generador crea el writeup y actualiza automáticamente los datos utilizados por el catálogo, las técnicas, las plataformas, el progreso, la búsqueda y las estadísticas del README.
@@ -103,7 +103,9 @@ El generador crea el writeup y actualiza automáticamente los datos utilizados p
 ## Actualizar datos manualmente
 
 ```bash
-pwsh ./scripts/rebuild-site-data.ps1
+python3 ./scripts/rebuild_site_data.py
+# o
+bash ./scripts/rebuild_site_data.sh
 ```
 
 ## Compilar

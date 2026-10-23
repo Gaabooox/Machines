@@ -5,7 +5,7 @@
     "url": "dockerlabs/very-easy/borazuwarahctf/",
     "subtitle": "DockerLabs · Very Easy · Linux",
     "content": "Máquina enfocada en reconocimiento, análisis de metadatos, fuerza bruta contra SSH y escalada de privilegios mediante una configuración insegura de sudo.",
-    "keywords": "DockerLabs Very Easy Linux SSH Sudo System.Object[]"
+    "keywords": "DockerLabs Very Easy Linux SSH Sudo Nmap SSH ExifTool Hydra Esteganografía Sudo"
   },
   {
     "type": "machine",
@@ -13,7 +13,7 @@
     "url": "dockerlabs/very-easy/breakmyssh/",
     "subtitle": "DockerLabs · Very Easy · Linux",
     "content": "Máquina enfocada en reconocimiento de servicios, enumeración de SSH y ataque de diccionario con Hydra para conseguir acceso directo como usuario root.",
-    "keywords": "DockerLabs Very Easy Linux SSH como root No necesaria System.Object[]"
+    "keywords": "DockerLabs Very Easy Linux SSH como root No necesaria Nmap SSH Hydra Fuerza bruta"
   },
   {
     "type": "machine",
@@ -21,7 +21,7 @@
     "url": "dockerlabs/very-easy/firsthacking/",
     "subtitle": "DockerLabs · Very Easy · Linux",
     "content": "Máquina enfocada en enumeración FTP, búsqueda de vulnerabilidades conocidas y explotación de una versión vulnerable de vsftpd.",
-    "keywords": "DockerLabs Very Easy Linux Backdoor de vsftpd No necesaria System.Object[]"
+    "keywords": "DockerLabs Very Easy Linux Backdoor de vsftpd No necesaria Nmap Reconocimiento Enumeración"
   },
   {
     "type": "machine",
@@ -29,7 +29,7 @@
     "url": "dockerlabs/very-easy/hedgehog/",
     "subtitle": "DockerLabs · Very Easy · Linux",
     "content": "Máquina enfocada en enumeración web, interpretación de pistas, fuerza bruta contra SSH y escalada mediante permisos inseguros de sudo.",
-    "keywords": "DockerLabs Very Easy Linux SSH como tails tails → sonic → root System.Object[]"
+    "keywords": "DockerLabs Very Easy Linux SSH como tails tails → sonic → root Nmap Linux Escalada de privilegios"
   },
   {
     "type": "machine",
@@ -37,7 +37,7 @@
     "url": "dockerlabs/very-easy/trust/",
     "subtitle": "DockerLabs · Very Easy · Linux",
     "content": "Máquina enfocada en fuzzing web, descubrimiento de usuarios, fuerza bruta contra SSH y escalada mediante Vim ejecutado con sudo.",
-    "keywords": "DockerLabs Very Easy Linux SSH como mario Vim mediante sudo System.Object[]"
+    "keywords": "DockerLabs Very Easy Linux SSH como mario Vim mediante sudo Nmap SSH Enumeración"
   },
   {
     "type": "machine",
@@ -45,7 +45,7 @@
     "url": "dockerlabs/very-easy/vacaciones/",
     "subtitle": "DockerLabs · Very Easy · Linux",
     "content": "Máquina enfocada en inspección de HTML, fuerza bruta contra SSH, movimiento entre usuarios y escalada mediante Ruby ejecutado con sudo.",
-    "keywords": "DockerLabs Very Easy Linux SSH como camilo Ruby mediante sudo System.Object[]"
+    "keywords": "DockerLabs Very Easy Linux SSH como camilo Ruby mediante sudo Nmap Web Linux Escalada de privilegios"
   },
   {
     "type": "technique",
@@ -66,7 +66,7 @@
   {
     "type": "technique",
     "title": "Enumeración",
-    "url": "techniques/#enumeracion",
+    "url": "techniques/#enumeraci-n",
     "subtitle": "2 máquina(s)",
     "content": "Utilizada en: FirstHacking, Trust",
     "keywords": "FirstHacking Trust"
@@ -98,7 +98,7 @@
   {
     "type": "technique",
     "title": "Esteganografía",
-    "url": "techniques/#esteganografia",
+    "url": "techniques/#esteganograf-a",
     "subtitle": "1 máquina(s)",
     "content": "Utilizada en: BorazuwarahCTF",
     "keywords": "BorazuwarahCTF"
@@ -154,7 +154,7 @@
   {
     "type": "command",
     "title": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
-    "url": "dockerlabs/very-easy/borazuwarahctf/#2-enumeracion-de-servicios",
+    "url": "dockerlabs/very-easy/borazuwarahctf/#2-enumeraci-n-de-servicios",
     "subtitle": "BorazuwarahCTF · 2. Enumeración de servicios",
     "content": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
     "keywords": "BorazuwarahCTF DockerLabs bash"
@@ -162,7 +162,7 @@
   {
     "type": "command",
     "title": "exiftool imagen",
-    "url": "dockerlabs/very-easy/borazuwarahctf/#3-enumeracion-web",
+    "url": "dockerlabs/very-easy/borazuwarahctf/#3-enumeraci-n-web",
     "subtitle": "BorazuwarahCTF · 3. Enumeración web",
     "content": "exiftool imagen",
     "keywords": "BorazuwarahCTF DockerLabs bash"
@@ -178,7 +178,7 @@
   {
     "type": "command",
     "title": "ssh borazuwarah@<IP_OBJETIVO>",
-    "url": "dockerlabs/very-easy/borazuwarahctf/#explicacion",
+    "url": "dockerlabs/very-easy/borazuwarahctf/#explicaci-n",
     "subtitle": "BorazuwarahCTF · Explicación",
     "content": "ssh borazuwarah@<IP_OBJETIVO>",
     "keywords": "BorazuwarahCTF DockerLabs bash"
@@ -218,7 +218,7 @@
   {
     "type": "command",
     "title": "sudo nmap -p 22 -sCV <IP_OBJETIVO> -oN targeted",
-    "url": "dockerlabs/very-easy/breakmyssh/#4-enumeracion-del-servicio-ssh",
+    "url": "dockerlabs/very-easy/breakmyssh/#4-enumeraci-n-del-servicio-ssh",
     "subtitle": "BreakMySsh · 4. Enumeración del servicio SSH",
     "content": "sudo nmap -p 22 -sCV <IP_OBJETIVO> -oN targeted",
     "keywords": "BreakMySsh DockerLabs bash"
@@ -226,7 +226,7 @@
   {
     "type": "command",
     "title": "searchsploit openssh 7.7",
-    "url": "dockerlabs/very-easy/breakmyssh/#5-investigacion-de-vulnerabilidades",
+    "url": "dockerlabs/very-easy/breakmyssh/#5-investigaci-n-de-vulnerabilidades",
     "subtitle": "BreakMySsh · 5. Investigación de vulnerabilidades",
     "content": "searchsploit openssh 7.7",
     "keywords": "BreakMySsh DockerLabs bash"
@@ -250,7 +250,7 @@
   {
     "type": "command",
     "title": "whoami",
-    "url": "dockerlabs/very-easy/breakmyssh/#8-comprobacion-del-acceso",
+    "url": "dockerlabs/very-easy/breakmyssh/#8-comprobaci-n-del-acceso",
     "subtitle": "BreakMySsh · 8. Comprobación del acceso",
     "content": "whoami",
     "keywords": "BreakMySsh DockerLabs bash"
@@ -258,7 +258,7 @@
   {
     "type": "command",
     "title": "id",
-    "url": "dockerlabs/very-easy/breakmyssh/#8-comprobacion-del-acceso",
+    "url": "dockerlabs/very-easy/breakmyssh/#8-comprobaci-n-del-acceso",
     "subtitle": "BreakMySsh · 8. Comprobación del acceso",
     "content": "id",
     "keywords": "BreakMySsh DockerLabs bash"
@@ -274,7 +274,7 @@
   {
     "type": "command",
     "title": "sudo nmap -p 21 -sCV <IP_OBJETIVO> -oN targeted",
-    "url": "dockerlabs/very-easy/firsthacking/#4-enumeracion-del-servicio",
+    "url": "dockerlabs/very-easy/firsthacking/#4-enumeraci-n-del-servicio",
     "subtitle": "FirstHacking · 4. Enumeración del servicio",
     "content": "sudo nmap -p 21 -sCV <IP_OBJETIVO> -oN targeted",
     "keywords": "FirstHacking DockerLabs bash"
@@ -282,7 +282,7 @@
   {
     "type": "command",
     "title": "searchsploit vsftpd 2.3.4",
-    "url": "dockerlabs/very-easy/firsthacking/#5-busqueda-de-vulnerabilidades",
+    "url": "dockerlabs/very-easy/firsthacking/#5-b-squeda-de-vulnerabilidades",
     "subtitle": "FirstHacking · 5. Búsqueda de vulnerabilidades",
     "content": "searchsploit vsftpd 2.3.4",
     "keywords": "FirstHacking DockerLabs bash"
@@ -290,7 +290,7 @@
   {
     "type": "command",
     "title": "searchsploit -x <RUTA_DEL_EXPLOIT>",
-    "url": "dockerlabs/very-easy/firsthacking/#5-busqueda-de-vulnerabilidades",
+    "url": "dockerlabs/very-easy/firsthacking/#5-b-squeda-de-vulnerabilidades",
     "subtitle": "FirstHacking · 5. Búsqueda de vulnerabilidades",
     "content": "searchsploit -x <RUTA_DEL_EXPLOIT>",
     "keywords": "FirstHacking DockerLabs bash"
@@ -298,7 +298,7 @@
   {
     "type": "command",
     "title": "python3 <EXPLOIT>.py <IP_OBJETIVO>",
-    "url": "dockerlabs/very-easy/firsthacking/#7-explotacion",
+    "url": "dockerlabs/very-easy/firsthacking/#7-explotaci-n",
     "subtitle": "FirstHacking · 7. Explotación",
     "content": "python3 <EXPLOIT>.py <IP_OBJETIVO>",
     "keywords": "FirstHacking DockerLabs bash"
@@ -306,7 +306,7 @@
   {
     "type": "command",
     "title": "whoami",
-    "url": "dockerlabs/very-easy/firsthacking/#8-comprobacion-del-acceso",
+    "url": "dockerlabs/very-easy/firsthacking/#8-comprobaci-n-del-acceso",
     "subtitle": "FirstHacking · 8. Comprobación del acceso",
     "content": "whoami",
     "keywords": "FirstHacking DockerLabs bash"
@@ -314,7 +314,7 @@
   {
     "type": "command",
     "title": "id",
-    "url": "dockerlabs/very-easy/firsthacking/#8-comprobacion-del-acceso",
+    "url": "dockerlabs/very-easy/firsthacking/#8-comprobaci-n-del-acceso",
     "subtitle": "FirstHacking · 8. Comprobación del acceso",
     "content": "id",
     "keywords": "FirstHacking DockerLabs bash"
@@ -330,7 +330,7 @@
   {
     "type": "command",
     "title": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
-    "url": "dockerlabs/very-easy/hedgehog/#3-enumeracion-de-servicios",
+    "url": "dockerlabs/very-easy/hedgehog/#3-enumeraci-n-de-servicios",
     "subtitle": "HedgeHog · 3. Enumeración de servicios",
     "content": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
     "keywords": "HedgeHog DockerLabs bash"
@@ -338,7 +338,7 @@
   {
     "type": "command",
     "title": "gobuster dir \\",
-    "url": "dockerlabs/very-easy/hedgehog/#4-enumeracion-web",
+    "url": "dockerlabs/very-easy/hedgehog/#4-enumeraci-n-web",
     "subtitle": "HedgeHog · 4. Enumeración web",
     "content": "gobuster dir \\\n    -u http://<IP_OBJETIVO>/ \\\n    -w /usr/share/wordlists/dirb/common.txt",
     "keywords": "HedgeHog DockerLabs bash"
@@ -346,7 +346,7 @@
   {
     "type": "command",
     "title": "tac /usr/share/wordlists/rockyou.txt > rockyou-reversed.txt",
-    "url": "dockerlabs/very-easy/hedgehog/#5-preparacion-del-diccionario",
+    "url": "dockerlabs/very-easy/hedgehog/#5-preparaci-n-del-diccionario",
     "subtitle": "HedgeHog · 5. Preparación del diccionario",
     "content": "tac /usr/share/wordlists/rockyou.txt > rockyou-reversed.txt",
     "keywords": "HedgeHog DockerLabs bash"
@@ -354,7 +354,7 @@
   {
     "type": "command",
     "title": "sed -i 's/^[[:space:]]*//' rockyou-reversed.txt",
-    "url": "dockerlabs/very-easy/hedgehog/#5-preparacion-del-diccionario",
+    "url": "dockerlabs/very-easy/hedgehog/#5-preparaci-n-del-diccionario",
     "subtitle": "HedgeHog · 5. Preparación del diccionario",
     "content": "sed -i 's/^[[:space:]]*//' rockyou-reversed.txt",
     "keywords": "HedgeHog DockerLabs bash"
@@ -442,7 +442,7 @@
   {
     "type": "command",
     "title": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
-    "url": "dockerlabs/very-easy/trust/#3-enumeracion-de-servicios",
+    "url": "dockerlabs/very-easy/trust/#3-enumeraci-n-de-servicios",
     "subtitle": "Trust · 3. Enumeración de servicios",
     "content": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
     "keywords": "Trust DockerLabs bash"
@@ -482,7 +482,7 @@
   {
     "type": "command",
     "title": "sudo -l",
-    "url": "dockerlabs/very-easy/trust/#9-enumeracion-de-privilegios",
+    "url": "dockerlabs/very-easy/trust/#9-enumeraci-n-de-privilegios",
     "subtitle": "Trust · 9. Enumeración de privilegios",
     "content": "sudo -l",
     "keywords": "Trust DockerLabs bash"
@@ -522,7 +522,7 @@
   {
     "type": "command",
     "title": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
-    "url": "dockerlabs/very-easy/vacaciones/#3-enumeracion-de-servicios",
+    "url": "dockerlabs/very-easy/vacaciones/#3-enumeraci-n-de-servicios",
     "subtitle": "Vacaciones · 3. Enumeración de servicios",
     "content": "sudo nmap -p 22,80 -sCV <IP_OBJETIVO> -oN targeted",
     "keywords": "Vacaciones DockerLabs bash"
@@ -530,7 +530,7 @@
   {
     "type": "command",
     "title": "curl http://<IP_OBJETIVO>/",
-    "url": "dockerlabs/very-easy/vacaciones/#4-inspeccion-de-la-pagina-web",
+    "url": "dockerlabs/very-easy/vacaciones/#4-inspecci-n-de-la-p-gina-web",
     "subtitle": "Vacaciones · 4. Inspección de la página web",
     "content": "curl http://<IP_OBJETIVO>/",
     "keywords": "Vacaciones DockerLabs bash"
@@ -562,7 +562,7 @@
   {
     "type": "command",
     "title": "find / -type f -name \"*.txt\" 2>/dev/null",
-    "url": "dockerlabs/very-easy/vacaciones/#7-enumeracion-interna",
+    "url": "dockerlabs/very-easy/vacaciones/#7-enumeraci-n-interna",
     "subtitle": "Vacaciones · 7. Enumeración interna",
     "content": "find / -type f -name \"*.txt\" 2>/dev/null",
     "keywords": "Vacaciones DockerLabs bash"
@@ -570,7 +570,7 @@
   {
     "type": "command",
     "title": "find /home -type f 2>/dev/null",
-    "url": "dockerlabs/very-easy/vacaciones/#7-enumeracion-interna",
+    "url": "dockerlabs/very-easy/vacaciones/#7-enumeraci-n-interna",
     "subtitle": "Vacaciones · 7. Enumeración interna",
     "content": "find /home -type f 2>/dev/null",
     "keywords": "Vacaciones DockerLabs bash"
@@ -594,7 +594,7 @@
   {
     "type": "command",
     "title": "sudo -l",
-    "url": "dockerlabs/very-easy/vacaciones/#9-enumeracion-de-privilegios",
+    "url": "dockerlabs/very-easy/vacaciones/#9-enumeraci-n-de-privilegios",
     "subtitle": "Vacaciones · 9. Enumeración de privilegios",
     "content": "sudo -l",
     "keywords": "Vacaciones DockerLabs bash"
